@@ -33,14 +33,14 @@ public class MenuController : MonoBehaviour
     // TODO: Animation?
     public Animator introAnimator;
     
-    private enum Panels { Title, MainMenu, Options, Intro};
+    private enum Panels { Title, MainMenu, Options, Intro, SceneControl,TestScene};
 
     private Panels _State;
     
     // Start is called before the first frame update
     void Start()
     {
-        SwitchToPanel(Panels.Title);
+        SwitchToPanel(Panels.SceneControl);
         gameStartButton.onClick.AddListener(GameStart);
         optionsButton.onClick.AddListener(Options);
         // creditsButton.onClick.AddListener(Credits);
@@ -126,7 +126,7 @@ public class MenuController : MonoBehaviour
     private IEnumerator LoadGameScene()
     {
         yield return new WaitForSeconds(5f);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Scene1");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("TestScene");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
