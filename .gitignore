@@ -88,8 +88,7 @@ crashlytics-build.properties
 ignore.conf
 
 # Large Assets
-/[Aa]ssets/[Aa]rt/
-/[Aa]ssets/[Aa]rt.meta
+
 /[Aa]ssets/[Ff]onts/
 /[Aa]ssets/[Ff]onts.meta
 
