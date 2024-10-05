@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/First Sceen.unity
     guid: fe645ee0d960140128359bcfd7adcf35
   - enabled: 1
-    path: Assets/UI/ModularHousePack1/Scenes/TestScene.unity
+    path: Assets/Scenes/TestScene.unity
     guid: e29bdfc1ffde6cb43b0d177ff9a05877
   m_configObjects: {}
