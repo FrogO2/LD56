@@ -92,8 +92,7 @@ ignore.conf
 /[Aa]ssets/[Aa]rt.meta
 /[Aa]ssets/[Ff]onts/
 /[Aa]ssets/[Ff]onts.meta
-/[Aa]ssets/[Rr]esources/
-/[Aa]ssets/[Rr]esources.meta
+
 /[Aa]ssets/[Uu]nityTechnologies/
 /[Aa]ssets/[Uu]nityTechnologies.meta
 
