@@ -29,6 +29,8 @@
 # IDEA config
 .idea/
 
+*.meta
+
 # Gradle cache directory
 .gradle/
 
