@@ -10,8 +10,8 @@ namespace Cell
 
     interface BaseMonoCell
     {
-        protected CellData cell_data;
-        protected float current_span;
+        CellData cell_data { get; }
+        float current_span { get; }
         protected void Generate();
         protected void OnBirth();
         protected void OnDeath();
