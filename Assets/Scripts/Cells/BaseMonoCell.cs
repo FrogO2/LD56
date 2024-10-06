@@ -1,20 +1,19 @@
 
-using JetBrains.Annotations;
-
 namespace Cell
 {
-    public class CellData
+    public struct CellData
     {
         public float resource;
         public float efficiency;
         public float span;
     }
 
-    public interface BaseMonoCell
+    interface BaseMonoCell
     {
-        int id {  get; }
         CellData cell_data { get; }
-        void Birth();
-        void Death();
+        float current_span { get; }
+        protected void Generate();
+        protected void OnBirth();
+        protected void OnDeath();
     }
 }

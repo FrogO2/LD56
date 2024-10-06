@@ -14,7 +14,7 @@ public class Move : MonoBehaviour
     {
         
         float moveX = Input.GetAxis("Horizontal");
-        tiltAngle += -aglspeed * moveX*4;
+        tiltAngle += -aglspeed * moveX;
         transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(0, 0, tiltAngle), smooth);
     }
     private void LateUpdate()
