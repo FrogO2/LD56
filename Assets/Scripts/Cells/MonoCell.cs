@@ -10,19 +10,19 @@ namespace Cell
 
     public struct Components
     {
-        public Component right_up;
+        public ComponentType right_up;
         public bool is_outer_ru;
-        public Component left_up;
+        public ComponentType left_up;
         public bool is_outer_lu;
-        public Component right_down;
+        public ComponentType right_down;
         public bool is_outer_rd;
-        public Component left_down;
+        public ComponentType left_down;
         public bool is_outer_ld;
-        public Component up;
+        public ComponentType up;
         public bool is_outer_u;
-        public Component down;
+        public ComponentType down;
         public bool is_outer_d;
-        public List<Component> allcomponents;
+        public List<ComponentType> allcomponents;
         public List<bool> allouters;
     }
     public class MonoCell : MonoBehaviour, BaseMonoCell
@@ -87,21 +87,15 @@ namespace Cell
             _current_span = span;
             _current_resource = resource;
             m_components = new Components();
-            m_components.up.id = 0;
-            m_components.right_up.id = 1;
-            m_components.right_down.id = 2;
-            m_components.down.id = 3;
-            m_components.left_down.id = 4;
-            m_components.left_up.id = 5;
             OuterUpdate();
             MsgInit();
-            m_components.allcomponents = new List<Component> { m_components.up, m_components.right_up, m_components.right_down,
+            m_components.allcomponents = new List<ComponentType> { m_components.up, m_components.right_up, m_components.right_down,
                                                             m_components.down, m_components.left_down, m_components.left_up};
             m_components.allouters = new List<bool> { m_components.is_outer_u, m_components.is_outer_ru, m_components.is_outer_rd,
                                                     m_components.is_outer_d, m_components.is_outer_ld, m_components.is_outer_lu};
         }
 
-        public Component id2component(int id)
+        public ComponentType id2component(int id)
         {
             switch (id)
             {
@@ -118,23 +112,22 @@ namespace Cell
                 case 5:
                     return m_components.left_up;
                 default:
-                    return new Component();
+                    return ComponentType.None;
             }
         }
 
-        public int component2pairid(Component component)
+        public int Id2pairid(int _id)
         {
-            int initid = component.id;
-            if (initid >= 3) return id - 3;
-            else return 3 - id;
+            if (_id >= 3) return _id - 3;
+            else return 3 - _id;
         }
 
-        public List<Component> Component2paircomponent(int id)
+        public List<int> Component2paircomponent(int _id)
         {
-            List<Component> components = new List<Component>(2);
-            components[0] = id2component((id + 1) % 6);
-            components[1] = id2component((id - 1) % 6);
-            return components;
+            List<int> components_id = new List<int>(2);
+            components_id[0] = (id + 1) % 6;
+            components_id[1] = (id - 1) % 6;
+            return components_id;
         }
         public void MsgInit()
         {
@@ -280,6 +273,16 @@ namespace Cell
                 TypeEventSystem.Global.Send<OnCreateCell>();
                 _current_resource += 0.5f*resource;
             }
+        }
+
+        private void OnMouseEnter()
+        {
+            
+        }
+
+        private void OnMouseExit()
+        {
+            
         }
     }
 }
