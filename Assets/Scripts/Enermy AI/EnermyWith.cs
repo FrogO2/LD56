@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnermyMove : MonoBehaviour
+public class EnermyWith : MonoBehaviour
 {
     private Rigidbody2D rb; 
     private Vector2 offset;
     public GameObject player;
-    private Vector2 movement;
     //public Move PlayerMove;
     public float timer = 0;
     public int cl=0;
@@ -22,15 +21,10 @@ public class EnermyMove : MonoBehaviour
     void Update()
     {
     timer += Time.deltaTime;
-    int k = Random.Range(0,3);
-        if (timer >= 2)
-        {if(k==0){
-            Wonder();
-            timer = 0;}
-        else{
-            Wonder();
+        if (timer >= 1)
+        {
+            run();
             timer = 0;
-        }
     }
     }
     void run(){
@@ -42,33 +36,14 @@ public class EnermyMove : MonoBehaviour
     }
     if(cl==0){
     offset = transform.position - player.transform.position;
-    offset =-offset;
-    movement= offset.normalized;
+    offset =offset;
+    Vector2 movement= offset.normalized;
     rb.velocity = movement*10; 
     }
     if(cl==1){
-    movement= new Vector2(0,0);
+    Vector2 movement= new Vector2(0,0);
     rb.velocity = movement*10;
     }
-    }
-    void Wonder(){
-    if(cl==0){
-        cl=1;
-    }
-    else{
-        cl=0;
-    }
-    if(cl==0){
-    int a1=Random.Range(-100,100);
-    int a2=Random.Range(-100,100);
-    movement= new Vector2(a1,a2);
-    movement= movement.normalized;
-    rb.velocity = movement*10; 
-    }
-    if(cl==1){
-    movement= new Vector2(0,0);
-    rb.velocity = movement*10;
-    }
-    }
+}
 }
 
