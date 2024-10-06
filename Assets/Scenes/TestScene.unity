@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 695194425}
   m_Layer: 0
   m_Name: MainCamera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -410,13 +410,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7aacabe1c7143b5b90923dbf1535f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ra: 1000
+  ra: 100
   i1: 0
-  CameraController: {fileID: 695194426}
-  OB: {fileID: 1229550109}
-  Robot: {fileID: 1488284054}
+  CameraController: {fileID: 0}
+  OB: {fileID: 0}
+  Robot: {fileID: 0}
   EnermyNumber: 100
-  EA: 1
+  EA: 0
   E: 0
 --- !u!114 &695194426
 MonoBehaviour:
@@ -442,6 +442,7 @@ GameObject:
   - component: {fileID: 708345248}
   - component: {fileID: 708345249}
   - component: {fileID: 708345250}
+  - component: {fileID: 708345251}
   m_Layer: 0
   m_Name: CellGroup
   m_TagString: Cell
@@ -488,8 +489,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 679e72a9609afa9478dd99bf973dc4ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 0.5
   aglspeed: 1
+  smooth: 1
+  countplusa: 10
+--- !u!114 &708345251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708345247}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aded73d030c9a2b4485ed63e7fa1accc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
+  countplusa: 10
   smooth: 1
 --- !u!1001 &1229550108
 PrefabInstance:
@@ -568,7 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab7feb94ee4f418ea7c761bd4b68715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnermyCreate: {fileID: 695194425}
+  EnermyCreate: {fileID: 0}
 --- !u!1001 &1488284053
 PrefabInstance:
   m_ObjectHideFlags: 0
