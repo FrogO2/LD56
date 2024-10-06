@@ -59,7 +59,7 @@ namespace Cell
             {
                 Debug.Log("no target cell");
                 target = Resources.Load<GameObject>(util.Pathes.BaseCellPath);
-                m_cell_obj = GameObject.Instantiate<GameObject>(target, new Vector3(0, 0, 0), new Quaternion());
+                m_cell_obj = GameObject.Instantiate<GameObject>(target, new Vector3(0, 0, 0), new Quaternion(), GameObject.Find("CellGroup").transform);
             }
             else
             {
@@ -72,6 +72,23 @@ namespace Cell
             m_cell = m_cell_obj.GetComponent<MonoCell>();
             m_cell.SetCellData(cellData);
             MonoCellManager.Instance.AddMonoCellToList(this, new_id);
+            return target;
+        }
+
+        public GameObject CreateWithParent(CellData cellData, Transform transform)
+        {
+            GameObject target = null;
+
+            if (target_cell == null)
+            {
+                Debug.Log("no target cell");
+                target = Resources.Load<GameObject>(util.Pathes.BaseCellPath);
+                m_cell_obj = GameObject.Instantiate<GameObject>(target, new Vector3(0, 0, 0), new Quaternion(), transform);
+            }
+
+            m_cell = m_cell_obj.GetComponent<MonoCell>();
+            m_cell.SetCellData(cellData);
+            MonoCellManager.Instance.AddMonoCellToList(this);
             return target;
         }
 

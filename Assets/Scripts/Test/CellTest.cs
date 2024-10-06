@@ -11,6 +11,7 @@ namespace test
     {
         MonoCellManager cellManager;
         CellData cellData = new CellData();
+        public Transform initTransform;
         private void Awake()
         {
             cellManager = MonoCellManager.Instance;
@@ -30,8 +31,7 @@ namespace test
                 cellData.efficiency = 10;
                 cellData.span = 5;
                 CellView test_cell = new CellView(GameObject.FindGameObjectWithTag("Cell"), cellData);
-                TypeEventSystem.Global.Send ( new OnRegisterMonoCellCreating { cellView = test_cell });
-                TypeEventSystem.Global.Send<OnCreateCell>();
+                test_cell.CreateWithParent(cellData, initTransform);
             }
         }
     }
