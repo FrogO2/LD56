@@ -84,40 +84,77 @@ namespace Cell
                 if (id >= MAXSIZE - 2*ROWNUM && (i == 4)) continue;
                 if ((id % (2 * ROWNUM) == 0) && (i == 3 || i == 0)) continue;
                 if ((id % (2 * ROWNUM) == 2*ROWNUM - 1) && (i == 2 || i == 5)) continue;
-                if (id - 2*ROWNUM >= 0) if (!CheckMap[id - (2 * ROWNUM)] && i == 1) { 
-                        ints.Enqueue(id - (2 * ROWNUM)); 
-                        num++;
-                    }
-                if (id - ROWNUM - 1 >= 0) if (!CheckMap[id - ROWNUM - 1] && i == 0) {
-                        ints.Enqueue(id - ROWNUM - 1);
-                        num++;
-                    }
-                if (id - ROWNUM >= 0) if (!CheckMap[id - ROWNUM] && i == 2){
-                        ints.Enqueue(id - ROWNUM);
-                        num++;
-                    }
-                if (id + ROWNUM - 1 < MAXSIZE) if (!CheckMap[id + ROWNUM - 1] && i == 3) {
-                        ints.Enqueue(id + ROWNUM - 1);
-                        num++;
-                    }
-                if (id + ROWNUM < MAXSIZE) if (!CheckMap[id + ROWNUM] && i == 5) {
-                        ints.Enqueue(id + ROWNUM);
-                        num++;
-                    }
-                if (id + 2 * ROWNUM < MAXSIZE) if (!CheckMap[id + (2 * ROWNUM)] && i == 4) {
-                        ints.Enqueue(id + (2 * ROWNUM));
-                        num++;
-                    }
+                if ((id/ROWNUM)%2 == 1) {
+                    if (id - 2 * ROWNUM >= 0) if (!CheckMap[id - (2 * ROWNUM)] && i == 1) {
+                            ints.Enqueue(id - (2 * ROWNUM));
+                            num++;
+                        }
+                    if (id - ROWNUM >= 0) if (!CheckMap[id - ROWNUM] && i == 0) {
+                            ints.Enqueue(id - ROWNUM);
+                            num++;
+                        }
+                    if (id - ROWNUM + 1 >= 0) if (!CheckMap[id - ROWNUM + 1] && i == 2) {
+                            ints.Enqueue(id - ROWNUM + 1);
+                            num++;
+                        }
+                    if (id + ROWNUM < MAXSIZE) if (!CheckMap[id + ROWNUM] && i == 3) {
+                            ints.Enqueue(id + ROWNUM);
+                            num++;
+                        }
+                    if (id + ROWNUM + 1 < MAXSIZE) if (!CheckMap[id + ROWNUM + 1] && i == 5) {
+                            ints.Enqueue(id + ROWNUM + 1);
+                            num++;
+                        }
+                    if (id + 2 * ROWNUM < MAXSIZE) if (!CheckMap[id + (2 * ROWNUM)] && i == 4) {
+                            ints.Enqueue(id + (2 * ROWNUM));
+                            num++;
+                        }
+                }
+                else
+                {
+                    if (id - 2 * ROWNUM >= 0) if (!CheckMap[id - (2 * ROWNUM)] && i == 1)
+                        {
+                            ints.Enqueue(id - (2 * ROWNUM));
+                            num++;
+                        }
+                    if (id - ROWNUM - 1 >= 0) if (!CheckMap[id - ROWNUM - 1] && i == 0)
+                        {
+                            ints.Enqueue(id - ROWNUM - 1);
+                            num++;
+                        }
+                    if (id - ROWNUM>= 0) if (!CheckMap[id - ROWNUM] && i == 2)
+                        {
+                            ints.Enqueue(id - ROWNUM);
+                            num++;
+                        }
+                    if (id + ROWNUM - 1 < MAXSIZE) if (!CheckMap[id + ROWNUM - 1] && i == 3)
+                        {
+                            ints.Enqueue(id + ROWNUM - 1);
+                            num++;
+                        }
+                    if (id + ROWNUM < MAXSIZE) if (!CheckMap[id + ROWNUM] && i == 5)
+                        {
+                            ints.Enqueue(id + ROWNUM);
+                            num++;
+                        }
+                    if (id + 2 * ROWNUM < MAXSIZE) if (!CheckMap[id + (2 * ROWNUM)] && i == 4)
+                        {
+                            ints.Enqueue(id + (2 * ROWNUM));
+                            num++;
+                        }
+                }
             }
             if (ints.Count == 0) return -1;
             int[] arr = new int[num];
-            Debug.Log(num);
+            //Debug.Log(num);
+            string str = "";
             for (int i = 0; i < num; i++)
             {
                 arr[i] = ints.Dequeue();
+                str += arr[i] + " ";
             }
             int choose = UnityEngine.Random.Range(0, num);
-            //Debug.Log(choose + ", " + arr[choose]);
+            Debug.Log("id: " + id + "|" + str);
             return arr[choose];
         }
 
