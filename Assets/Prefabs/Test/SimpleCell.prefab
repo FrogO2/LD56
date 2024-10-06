@@ -1540,9 +1540,8 @@ GameObject:
   - component: {fileID: 2732908938187724236}
   - component: {fileID: 4100180654935039154}
   - component: {fileID: 3496052995932278596}
-  - component: {fileID: 7425624302007284072}
   m_Layer: 0
-  m_Name: Cell
+  m_Name: SimpleCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1558,7 +1557,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.045255, y: 0.12997, z: 0}
-  m_LocalScale: {x: 0.174, y: 0.174, z: 0.174}
+  m_LocalScale: {x: 1.0387299, y: 1.0387299, z: 1.0387299}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 938665053577748975}
@@ -1684,21 +1683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c489b5745a8a57241a7a0e3f25dd6095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7425624302007284072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8458955302585390876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32bbab2f92a78e84cbe859e1f12cce11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resource: 100
-  efficiency: 40
-  span: 10
 --- !u!1 &8715066756001620547
 GameObject:
   m_ObjectHideFlags: 0
