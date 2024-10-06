@@ -19,6 +19,21 @@ namespace Cell
         public float efficiency;
         public float span;
 
+        public bool isOuter = false;
+        private bool isDevourActive = false;
+        private bool isProduceActive = false;
+        private bool isExhaustActive = false;
+
+        public struct Components
+        {
+            ComponentType right_up;
+            ComponentType left_up;
+            ComponentType right_down;
+            ComponentType left_down;
+            ComponentType up;
+            ComponentType down;
+        }
+
         public CellData cell_data
         { 
             get 

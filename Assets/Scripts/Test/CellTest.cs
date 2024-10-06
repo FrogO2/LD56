@@ -15,10 +15,10 @@ namespace test
         private void Awake()
         {
             cellManager = MonoCellManager.Instance;
-            for (int i = 0; i < 81; i++)
-            {
-                MonoCellManager.Instance.FindClosedAvailableID(i);
-            }
+            //for (int i = 0; i < 81; i++)
+            //{
+            //    MonoCellManager.Instance.FindClosedAvailableID(i);
+            //}
 
         }
         private void Update()
