@@ -13,7 +13,7 @@ namespace Cell
         CellData cell_data { get; }
         float current_span { get; }
         protected void Generate();
-        protected void Birth();
-        protected void Death();
+        protected void OnBirth();
+        protected void OnDeath();
     }
 }
