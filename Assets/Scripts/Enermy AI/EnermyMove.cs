@@ -7,7 +7,7 @@ public class EnermyMove : MonoBehaviour
     private Rigidbody2D rb; 
     private Vector2 offset;
     public GameObject player;
-    public PlayerMove PlayerMove;
+    public Move PlayerMove;
     public float timer = 0;
     public int cl=0;
     // Start is called before the first frame update

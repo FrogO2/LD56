@@ -29,8 +29,6 @@
 # IDEA config
 .idea/
 
-*.meta
-
 # Gradle cache directory
 .gradle/
 
@@ -90,12 +88,10 @@ crashlytics-build.properties
 ignore.conf
 
 # Large Assets
-/[Aa]ssets/[Aa]rt/
-/[Aa]ssets/[Aa]rt.meta
+
 /[Aa]ssets/[Ff]onts/
 /[Aa]ssets/[Ff]onts.meta
-/[Aa]ssets/[Rr]esources/
-/[Aa]ssets/[Rr]esources.meta
+
 /[Aa]ssets/[Uu]nityTechnologies/
 /[Aa]ssets/[Uu]nityTechnologies.meta
 
