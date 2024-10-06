@@ -36,7 +36,6 @@ public class EnermyWith : MonoBehaviour
     }
     if(cl==0){
     offset = transform.position - player.transform.position;
-    offset =offset;
     Vector2 movement= offset.normalized;
     rb.velocity = movement*10; 
     }
