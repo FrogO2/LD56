@@ -53,10 +53,7 @@ namespace Cell
             destroyedCell.Death();
         }
 
-        private bool BitArrayIsEmpty()
-        {
 
-        }
 
         private int FindMinAvailableID()
         {
