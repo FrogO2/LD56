@@ -26,48 +26,48 @@ namespace Cell
         public HashSet<MonoCell> MonoCellList;
         private Dictionary<int, CellView> _cells;
         private BitArray CheckMap;
+        private int MAXSIZE = 81;
+        private int ROWNUM = 9;
+        private int CENTER = 40;
         //private delegate GameObject CellFactoryMethod(CellData cellData);
 
-        private CustomObjectFactory<GameObject> CellFactory;
-
-        public void BitInit() => CheckMap = new BitArray(64, false);
+        public void BitInit() => CheckMap = new BitArray(81, false);
 
         public void CellListInit()
         {
-            if (MonoCellList != null) return;
-            MonoCellList = new HashSet<MonoCell>();
-        }
-
-        public void MsgInit() 
-        {
-            TypeEventSystem.Global.Register<OnCreateCell>(e =>
-            {
-                CellFactory.Create();
-            });
-            TypeEventSystem.Global.Register<OnRegisterMonoCellCreating>(e =>
-            {
-                RegisterMonoCellCreating(e.cellView, e.data);
-            });
+            if (MonoCellList != null && _cells != null) return;
+            if (MonoCellList == null) MonoCellList = new HashSet<MonoCell>();
+            if (_cells == null) _cells = new Dictionary<int, CellView>();
         }
 
         public void Initialize()
         {
             BitInit();
             CellListInit();
-            MsgInit();
         }
 
-        public void RegisterMonoCellCreating(CellView cellView, CellData cellData)
+        public void DestroyMonoCell(int id)
         {
-            CellFactory = new CustomObjectFactory<GameObject>(() => cellView.RandomCreate(cellData));
+            MonoCell destroyedCell = _cells[id].m_cell;
+            RemoveMonoCellFromListByIndex(id);
+            destroyedCell.Death();
         }
 
-        public void DestroyMonoCell()
+        private bool BitArrayIsEmpty()
         {
-            
+
         }
 
         private int FindMinAvailableID()
+        {
+            for (int i = 0; i < CheckMap.Count; i++)
+            {
+                if (!CheckMap[i]) return i;
+            }
+            return -1;
+        }
+
+        private int FindClosedAvailableID(int id)
         {
             for (int i = 0; i < CheckMap.Count; i++)
             {
@@ -86,6 +86,7 @@ namespace Cell
             {
                 cellView.m_cell.SetId(id);
                 _cells.Add(id, cellView);
+                CheckMap[id] = true;
             }
         }
 
@@ -122,21 +123,8 @@ namespace Cell
             {
                 RemoveMonoCellFromList(cell);
             }
-        }
-    }
-
-    public class CustomObjectFactory<T> : IObjectFactory<T>
-    {
-        public CustomObjectFactory(Func<T> factoryMethod)
-        {
-            mFactoryMethod = factoryMethod;
-        }
-
-        protected Func<T> mFactoryMethod;
-
-        public T Create()
-        {
-            return mFactoryMethod();
+            _cells.Remove(id);
+            CheckMap[id] = false;
         }
     }
 }

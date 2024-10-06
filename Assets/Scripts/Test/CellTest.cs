@@ -14,6 +14,7 @@ namespace test
         private void Awake()
         {
             cellManager = MonoCellManager.Instance;
+            
         }
         private void Update()
         {
@@ -22,7 +23,7 @@ namespace test
                 Debug.Log("send msg");
                 cellData.resource = 1000;
                 cellData.efficiency = 10;
-                cellData.span = 1000;
+                cellData.span = 5;
                 CellView test_cell = new CellView(GameObject.FindGameObjectWithTag("Cell"), cellData);
                 TypeEventSystem.Global.Send ( new OnRegisterMonoCellCreating { cellView = test_cell, data = cellData });
                 TypeEventSystem.Global.Send<OnCreateCell>();

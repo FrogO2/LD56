@@ -1,4 +1,5 @@
 using Cell;
+using QFramework;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -39,11 +40,12 @@ namespace Cell
         public virtual void Birth()
         {
             CellDataInit(this.resource, this.efficiency, this.span);
+            _current_span = span;
         }
 
         public virtual void Death()
         {
-            throw new System.NotImplementedException();
+            Destroy(this.gameObject);
         }
 
         public void CellDataInit(float resource, float efficiency, float span)
@@ -64,23 +66,32 @@ namespace Cell
             resource = data.resource;
             efficiency = data.efficiency;
             span = data.span;
+            RefreshCurrentSpan();
         }
         public float GetCurrentSpan() => _current_span;
+        private void RefreshCurrentSpan() => _current_span = span;
 
         private void Awake()
         {
             Birth();
         }
-        // Start is called before the first frame update
+
         void Start()
         {
             
         }
 
-        // Update is called once per frame
         void Update()
         {
-            
+            if (_current_span > 0)
+            {
+                _current_span -= Time.deltaTime;
+            }
+            else if (enabled)
+            {
+                TypeEventSystem.Global.Send(new OnDestroyCell { monoCell = this});
+                enabled = false;
+            }
         }
     }
 }
