@@ -1,12 +1,11 @@
-using QFramework;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Cell
+public class MonoCellController : MonoBehaviour
 {
-    public class MonoCellManager
+    // Start is called before the first frame update
+    void Start()
     {
         private static MonoCellManager _instance;
         public static MonoCellManager Instance
