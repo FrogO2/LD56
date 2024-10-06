@@ -2,6 +2,7 @@ using QFramework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Cell
@@ -29,6 +30,7 @@ namespace Cell
         private int MAXSIZE = 81;
         private int ROWNUM = 9;
         private int CENTER = 40;
+        private Vector3 ZeroPoint = new Vector3(-1.52f * 4, 0.88f * 2, 0);
         //private delegate GameObject CellFactoryMethod(CellData cellData);
 
         public void BitInit() => CheckMap = new BitArray(81, false);
@@ -147,20 +149,78 @@ namespace Cell
             if (ints.Count == 0) return -1;
             int[] arr = new int[num];
             //Debug.Log(num);
-            string str = "";
+            //string str = "";
             for (int i = 0; i < num; i++)
             {
                 arr[i] = ints.Dequeue();
-                str += arr[i] + " ";
+                //str += arr[i] + " ";
             }
             int choose = UnityEngine.Random.Range(0, num);
-            Debug.Log("id: " + id + "|" + str);
+            //Debug.Log("id: " + id + "|" + str);
             return arr[choose];
+        }
+
+        public int LeftUpCell(int id)
+        {
+            if (id % (2 * ROWNUM) != 0 || id >= ROWNUM) 
+            {
+                if ((id / ROWNUM) % 2 == 1 && CheckMap[id - ROWNUM]) return id - ROWNUM;
+                else if ((id / ROWNUM) % 2 == 0 && CheckMap[id - ROWNUM - 1]) return id - ROWNUM - 1;
+            }
+            return -1;
+        }
+
+        public int RightUpCell(int id)
+        {
+            if (id % (2 * ROWNUM) != 2 * ROWNUM - 1 || id >= ROWNUM)
+            {
+                if ((id / ROWNUM) % 2 == 1 && CheckMap[id - ROWNUM + 1]) return id - ROWNUM + 1;
+                else if ((id / ROWNUM) % 2 == 0 && CheckMap[id - ROWNUM]) return id - ROWNUM;
+            }
+            return -1;
+        }
+
+        public int LeftDownCell(int id)
+        {
+            if (id % (2 * ROWNUM) != 0 || id < MAXSIZE - ROWNUM)
+            {
+                if ((id / ROWNUM) % 2 == 1 && CheckMap[id + ROWNUM]) return id + ROWNUM;
+                else if ((id / ROWNUM) % 2 == 0 && CheckMap[id + ROWNUM - 1]) return id + ROWNUM - 1;
+            }
+            return -1;
+        }
+
+        public int RightDownCell(int id)
+        {
+            if (id % (2 * ROWNUM) != 2 * ROWNUM - 1 || id < MAXSIZE - ROWNUM)
+            {
+                if ((id / ROWNUM) % 2 == 1 && CheckMap[id + ROWNUM + 1]) return id - ROWNUM + 1;
+                else if ((id / ROWNUM) % 2 == 0 && CheckMap[id - ROWNUM]) return id - ROWNUM;
+            }
+            return -1;
+        }
+
+        public int UpCell(int id)
+        {
+            if ( id >= 2*ROWNUM)
+            {
+                return id - (2 * ROWNUM);
+            }
+            return -1;
+        }
+
+        public int DownCell(int id)
+        {
+            if (id < MAXSIZE - 2 * ROWNUM)
+            {
+                return id + (2 * ROWNUM);
+            }
+            return -1;
         }
 
         public Vector3 ChoosePos(int id)
         {
-            Vector3 pos = new Vector3(-1.52f*4, 0.88f*2, 0);
+            Vector3 pos = ZeroPoint;
             float d_x = id % ROWNUM * 1.52f + (id / ROWNUM)%2 * 0.76f;
             float d_y = id / ROWNUM * 0.44f;
             pos.x += d_x;
