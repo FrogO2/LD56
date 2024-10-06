@@ -29,7 +29,7 @@ namespace test
                 cellData.resource = 1000;
                 cellData.efficiency = 10;
                 cellData.span = 5;
-                CellView test_cell = new CellView(GameObject.FindGameObjectWithTag("Cell"), cellData);
+                CellView test_cell = new CellView();
                 test_cell.CreateWithParent(cellData, initTransform);
             }
         }
