@@ -7,7 +7,8 @@ namespace Cell
     {
         Devour,
         Produce,
-        Exhaust
+        Exhaust,
+        None
     }
     public struct Component
     {
