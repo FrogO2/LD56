@@ -126,8 +126,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4
-  m_fontSizeBase: 4
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -181,8 +181,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6046910105512942446}
   - component: {fileID: 88790013832417995}
-  - component: {fileID: 1656857726401356808}
   - component: {fileID: 5366160919044997883}
+  - component: {fileID: 284939378011352860}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Cell
@@ -262,21 +262,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1656857726401356808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7359891684577437037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80fe2c7a63d083849baf11c65f2762d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resource: 100
-  efficiency: 1
-  span: 20
 --- !u!114 &5366160919044997883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,3 +274,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a12ddd2955aa8d4aa11e78e24521fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &284939378011352860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7359891684577437037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32bbab2f92a78e84cbe859e1f12cce11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resource: 1000
+  efficiency: 10
+  span: 5

@@ -11,10 +11,16 @@ namespace test
     {
         MonoCellManager cellManager;
         CellData cellData = new CellData();
+        public Transform initTransform;
         private void Awake()
         {
             cellManager = MonoCellManager.Instance;
-            
+            //for (int i = 0; i < 81; i++)
+            //{
+            //    GameObject obj = Resources.Load<GameObject>(util.Pathes.BaseCellPath);
+            //    GameObject.Instantiate(obj, MonoCellManager.Instance.ChoosePos(i), new Quaternion(), GameObject.Find("CellGroup").transform);
+            //}
+
         }
         private void Update()
         {
@@ -25,8 +31,7 @@ namespace test
                 cellData.efficiency = 10;
                 cellData.span = 5;
                 CellView test_cell = new CellView(GameObject.FindGameObjectWithTag("Cell"), cellData);
-                TypeEventSystem.Global.Send ( new OnRegisterMonoCellCreating { cellView = test_cell, data = cellData });
-                TypeEventSystem.Global.Send<OnCreateCell>();
+                test_cell.CreateWithParent(cellData, initTransform);
             }
         }
     }
