@@ -240,6 +240,8 @@ namespace Cell
                         m_components.is_outer_d = true;
             }
         }
+        
+        
 
         private void Awake()
         {
