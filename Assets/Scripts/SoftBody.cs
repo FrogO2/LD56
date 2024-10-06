@@ -36,10 +36,11 @@ private const float splineOffset = 0.2f;
 
     private void UpdateVerticies()
     {
+        Vector2 _center = points[6].localPosition;
         for (int i = 0; i < points.Length - 1; i++)
         {
             Vector2 _vertex = points[i].localPosition;
-            Vector2 _towardsCenter = (Vector2.zero - _vertex).normalized;
+            Vector2 _towardsCenter = (_center - _vertex).normalized;
             float _colliderRadius = points[i].gameObject.GetComponent<CircleCollider2D>().radius;
             try
             {
