@@ -14,12 +14,12 @@ namespace test
         private void Awake()
         {
             cellManager = MonoCellManager.Instance;
-            //for (int i = 0; i < 81; i++) 
+            //for (int i = 0; i < 81; i++)
             //{
             //    GameObject obj = Resources.Load<GameObject>(util.Pathes.BaseCellPath);
             //    GameObject.Instantiate(obj, MonoCellManager.Instance.ChoosePos(i), new Quaternion(), GameObject.Find("CellGroup").transform);
             //}
-            
+
         }
         private void Update()
         {

@@ -64,8 +64,6 @@ namespace Cell
             else
             {
                 new_id = MonoCellManager.Instance.FindClosedAvailableID(target_cell.GetComponent<MonoCell>().id);
-                if (MonoCellManager.Instance.CheckMap[new_id]) return null;
-                //Debug.Log(new_id);
                 Vector3 pos = MonoCellManager.Instance.ChoosePos(new_id);
                 target = GameObject.Instantiate<GameObject>(target_cell, pos, new Quaternion(), target_cell.transform.parent);
                 m_cell_obj = target;

@@ -82,9 +82,8 @@ namespace Cell
                 if (id < 2*ROWNUM && i == 1) continue;
                 if (id >= MAXSIZE - ROWNUM && (i == 3 || i == 5)) continue;
                 if (id >= MAXSIZE - 2*ROWNUM && (i == 4)) continue;
-                if ((id % ROWNUM == 0 || id % (2 * ROWNUM) != 0) && (id == 3 || id == 0)) continue;
-                if ((id % (2 * ROWNUM) == 0 || (id % ROWNUM == ROWNUM - 1 && id % (2 * ROWNUM) != ROWNUM - 1)) && id == 2) continue;
-                if ((id % (2 * ROWNUM) == ROWNUM - 1 || id % ROWNUM != ROWNUM - 1) && (id == 2 || id == 5)) continue;
+                if ((id % (2 * ROWNUM) == 0) && (i == 3 || i == 0)) continue;
+                if ((id % (2 * ROWNUM) == 2*ROWNUM - 1) && (i == 2 || i == 5)) continue;
                 if (id - 2*ROWNUM >= 0) if (!CheckMap[id - (2 * ROWNUM)] && i == 1) { 
                         ints.Enqueue(id - (2 * ROWNUM)); 
                         num++;
