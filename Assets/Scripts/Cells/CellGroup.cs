@@ -34,7 +34,7 @@ namespace Cell
             }).UnRegisterWhenGameObjectDestroyed(this);
             TypeEventSystem.Global.Register<OnRegisterMonoCellCreating>(e =>
             {
-                RegisterMonoCellCreating(e.cellView, e.data);
+                RegisterMonoCellCreating(e.cellView);
             }).UnRegisterWhenGameObjectDestroyed(this);
             TypeEventSystem.Global.Register<OnDestroyCell>(e =>
             {
@@ -42,9 +42,9 @@ namespace Cell
             }).UnRegisterWhenGameObjectDestroyed(this);
         }
 
-        public void RegisterMonoCellCreating(CellView cellView, CellData cellData)
+        public void RegisterMonoCellCreating(CellView cellView)
         {
-            CellFactory = new CustomObjectFactory<GameObject>(() => cellView.RandomCreate(cellData));
+            CellFactory = new CustomObjectFactory<GameObject>(() => cellView.CopyCell());
         }
     }
 
