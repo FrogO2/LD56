@@ -6,6 +6,7 @@ public class AnimationTester : MonoBehaviour
 {
     public Animator animator1;  // Animator组件的引用
     public Animator animator2;  // Animator组件的引用
+    
 
 
 
@@ -18,6 +19,10 @@ public class AnimationTester : MonoBehaviour
             animator1.SetTrigger("PlayMitosis");
             animator2.SetTrigger("PlayMitosis");
         }
+        
+
+        
+
     }
 }
 
