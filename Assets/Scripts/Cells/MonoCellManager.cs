@@ -27,9 +27,9 @@ namespace Cell
         public HashSet<MonoCell> MonoCellList;
         public Dictionary<int, CellView> _cells;
         public BitArray CheckMap;
-        private int MAXSIZE = 81;
-        private int ROWNUM = 9;
-        private int CENTER = 40;
+        public const int MAXSIZE = 81;
+        public const int ROWNUM = 9;
+        public const int CENTER = 40;
         private Vector3 ZeroPoint = new Vector3(-1.52f * 4, 0.88f * 2, 0);
         //private delegate GameObject CellFactoryMethod(CellData cellData);
 
@@ -216,6 +216,11 @@ namespace Cell
                 return id + (2 * ROWNUM);
             }
             return -1;
+        }
+
+        public void Detect(CellView cellView, ComponentType type)
+        {
+            
         }
 
         public Vector3 ChoosePos(int id)

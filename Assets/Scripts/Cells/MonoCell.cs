@@ -7,6 +7,24 @@ using UnityEngine;
 
 namespace Cell
 { 
+
+    public struct Components
+    {
+        public Component right_up;
+        public bool is_outer_ru;
+        public Component left_up;
+        public bool is_outer_lu;
+        public Component right_down;
+        public bool is_outer_rd;
+        public Component left_down;
+        public bool is_outer_ld;
+        public Component up;
+        public bool is_outer_u;
+        public Component down;
+        public bool is_outer_d;
+        public List<Component> allcomponents;
+        public List<bool> allouters;
+    }
     public class MonoCell : MonoBehaviour, BaseMonoCell
     {
         private CellData _cell_data;
@@ -19,20 +37,12 @@ namespace Cell
         public float efficiency;
         public float span;
 
-        public bool isOuter = false;
+        public Components m_components;
         private bool isDevourActive = false;
         private bool isProduceActive = false;
         private bool isExhaustActive = false;
 
-        public struct Components
-        {
-            ComponentType right_up;
-            ComponentType left_up;
-            ComponentType right_down;
-            ComponentType left_down;
-            ComponentType up;
-            ComponentType down;
-        }
+        
 
         public CellData cell_data
         { 
@@ -56,9 +66,7 @@ namespace Cell
 
         public virtual void Birth()
         {
-            CellDataInit(this.resource, this.efficiency, this.span);
-            _current_span = span;
-            _current_resource = resource;
+            Initialize();
         }
 
         public virtual void Death()
@@ -73,6 +81,72 @@ namespace Cell
             this.cell_data.span = span;
         }
 
+        public void Initialize()
+        {
+            CellDataInit(this.resource, this.efficiency, this.span);
+            _current_span = span;
+            _current_resource = resource;
+            m_components = new Components();
+            m_components.up.id = 0;
+            m_components.right_up.id = 1;
+            m_components.right_down.id = 2;
+            m_components.down.id = 3;
+            m_components.left_down.id = 4;
+            m_components.left_up.id = 5;
+            OuterUpdate();
+            MsgInit();
+            m_components.allcomponents = new List<Component> { m_components.up, m_components.right_up, m_components.right_down,
+                                                            m_components.down, m_components.left_down, m_components.left_up};
+            m_components.allouters = new List<bool> { m_components.is_outer_u, m_components.is_outer_ru, m_components.is_outer_rd,
+                                                    m_components.is_outer_d, m_components.is_outer_ld, m_components.is_outer_lu};
+        }
+
+        public Component id2component(int id)
+        {
+            switch (id)
+            {
+                case 0:
+                    return m_components.up;
+                case 1:
+                    return m_components.right_up;
+                case 2:
+                    return m_components.right_down;
+                case 3:
+                    return m_components.down;
+                case 4:
+                    return m_components.left_down;
+                case 5:
+                    return m_components.left_up;
+                default:
+                    return new Component();
+            }
+        }
+
+        public int component2pairid(Component component)
+        {
+            int initid = component.id;
+            if (initid >= 3) return id - 3;
+            else return 3 - id;
+        }
+
+        public List<Component> Component2paircomponent(int id)
+        {
+            List<Component> components = new List<Component>(2);
+            components[0] = id2component((id + 1) % 6);
+            components[1] = id2component((id - 1) % 6);
+            return components;
+        }
+        public void MsgInit()
+        {
+            TypeEventSystem.Global.Register<OnCreateCell>(e =>
+            {
+                OuterUpdate();
+            }).UnRegisterWhenGameObjectDestroyed(this);
+            TypeEventSystem.Global.Register<OnDestroyCell>(e =>
+            {
+                OuterUpdate();
+            }).UnRegisterWhenGameObjectDestroyed(this);
+        }
         public void SetCellView(CellView cellView) => m_cellView = cellView;
 
         public void SetId(int id)
@@ -92,6 +166,80 @@ namespace Cell
         public float GetCurrentSpan() => _current_span;
         private void RefreshCurrentSpan() => _current_span = span;
         private void RefreshCurrentResource() => _current_resource = resource;
+
+        public void OuterUpdate()
+        {
+            if (id < MonoCellManager.ROWNUM)
+            {
+                m_components.is_outer_lu = true;
+                m_components.is_outer_ru = true;
+            }
+            if (id < 2*MonoCellManager.ROWNUM)
+            {
+                m_components.is_outer_u = true;
+            }
+            if (id % (2*MonoCellManager.ROWNUM) == 0)
+            {
+                m_components.is_outer_lu = true;
+                m_components.is_outer_ld = true;
+            }
+            if (id % (2 * MonoCellManager.ROWNUM) == 2 * MonoCellManager.ROWNUM - 1)
+            {
+                m_components.is_outer_rd = true;
+                m_components.is_outer_ru = true;
+            }
+            if (id >= MonoCellManager.MAXSIZE - 2 * MonoCellManager.ROWNUM)
+            {
+                m_components.is_outer_d = true;
+            }
+            if (id >= MonoCellManager.MAXSIZE - MonoCellManager.ROWNUM)
+            {
+                m_components.is_outer_ld = true;
+                m_components.is_outer_rd = true;
+            }
+            if ((id / MonoCellManager.ROWNUM) % 2 == 1)
+            {
+                if (id - 2 * MonoCellManager.ROWNUM >= 0) 
+                    if (!MonoCellManager.Instance.CheckMap[id - (2 * MonoCellManager.ROWNUM)]) 
+                        m_components.is_outer_u = true;
+                if (id - MonoCellManager.ROWNUM >= 0) 
+                    if (!MonoCellManager.Instance.CheckMap[id - MonoCellManager.ROWNUM]) 
+                        m_components.is_outer_lu = true;
+                if (id - MonoCellManager.ROWNUM + 1 >= 0) 
+                    if (!MonoCellManager.Instance.CheckMap[id - MonoCellManager.ROWNUM + 1]) 
+                        m_components.is_outer_ru = true;
+                if (id + MonoCellManager.ROWNUM < MonoCellManager.MAXSIZE) 
+                    if (!MonoCellManager.Instance.CheckMap[id + MonoCellManager.ROWNUM]) 
+                        m_components.is_outer_ld = true;
+                if (id + MonoCellManager.ROWNUM + 1 < MonoCellManager.MAXSIZE) 
+                    if (!MonoCellManager.Instance.CheckMap[id + MonoCellManager.ROWNUM + 1]) 
+                        m_components.is_outer_rd = true;
+                if (id + 2 * MonoCellManager.ROWNUM < MonoCellManager.MAXSIZE) 
+                    if (!MonoCellManager.Instance.CheckMap[id + (2 * MonoCellManager.ROWNUM)]) 
+                        m_components.is_outer_d = true;
+            }
+            else
+            {
+                if (id - 2 * MonoCellManager.ROWNUM >= 0)
+                    if (!MonoCellManager.Instance.CheckMap[id - (2 * MonoCellManager.ROWNUM)])
+                        m_components.is_outer_u = true;
+                if (id - MonoCellManager.ROWNUM >= 0)
+                    if (!MonoCellManager.Instance.CheckMap[id - MonoCellManager.ROWNUM -1])
+                        m_components.is_outer_lu = true;
+                if (id - MonoCellManager.ROWNUM + 1 >= 0)
+                    if (!MonoCellManager.Instance.CheckMap[id - MonoCellManager.ROWNUM])
+                        m_components.is_outer_ru = true;
+                if (id + MonoCellManager.ROWNUM < MonoCellManager.MAXSIZE)
+                    if (!MonoCellManager.Instance.CheckMap[id + MonoCellManager.ROWNUM - 1])
+                        m_components.is_outer_ld = true;
+                if (id + MonoCellManager.ROWNUM + 1 < MonoCellManager.MAXSIZE)
+                    if (!MonoCellManager.Instance.CheckMap[id + MonoCellManager.ROWNUM])
+                        m_components.is_outer_rd = true;
+                if (id + 2 * MonoCellManager.ROWNUM < MonoCellManager.MAXSIZE)
+                    if (!MonoCellManager.Instance.CheckMap[id + (2 * MonoCellManager.ROWNUM)])
+                        m_components.is_outer_d = true;
+            }
+        }
 
         private void Awake()
         {
