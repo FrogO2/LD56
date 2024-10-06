@@ -51,6 +51,39 @@ namespace Cell
             return target;
         }
 
+        public GameObject Create(CellData cellData)
+        {
+            GameObject target = null;
+            int new_id = -1;
+            if (target_cell == null)
+            {
+                Debug.Log("no target cell");
+                target = Resources.Load<GameObject>(util.Pathes.BaseCellPath);
+                m_cell_obj = GameObject.Instantiate<GameObject>(target, new Vector3(0, 0, 0), new Quaternion());
+            }
+            else
+            {
+                new_id = MonoCellManager.Instance.FindClosedAvailableID(target_cell.GetComponent<MonoCell>().id);
+                if (MonoCellManager.Instance.CheckMap[new_id]) return null;
+                //Debug.Log(new_id);
+                Vector3 pos = MonoCellManager.Instance.ChoosePos(new_id);
+                target = GameObject.Instantiate<GameObject>(target_cell, pos, new Quaternion(), target_cell.transform.parent);
+                m_cell_obj = target;
+            }
+
+            m_cell = m_cell_obj.GetComponent<MonoCell>();
+            m_cell.SetCellData(cellData);
+            MonoCellManager.Instance.AddMonoCellToList(this, new_id);
+            return target;
+        }
+
+        public GameObject CopyCell()
+        {
+            if (target_cell == null) return Create(data, MonoCellManager.Instance.ChoosePos(40));
+            if (MonoCellManager.Instance.FindClosedAvailableID(target_cell.GetComponent<MonoCell>().id) < 0) return null;
+            return Create(data);
+        }
+
         public GameObject RandomCreate(CellData cellData)
         {
             Vector3 pos = new Vector3(UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10));
@@ -60,5 +93,5 @@ namespace Cell
 
     public struct OnCreateCell {  }
     public struct OnDestroyCell { public MonoCell monoCell; }
-    public struct OnRegisterMonoCellCreating { public CellView cellView; public CellData data; }
+    public struct OnRegisterMonoCellCreating { public CellView cellView; }
 }

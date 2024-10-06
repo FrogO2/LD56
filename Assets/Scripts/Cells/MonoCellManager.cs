@@ -24,8 +24,8 @@ namespace Cell
         }
 
         public HashSet<MonoCell> MonoCellList;
-        private Dictionary<int, CellView> _cells;
-        private BitArray CheckMap;
+        public Dictionary<int, CellView> _cells;
+        public BitArray CheckMap;
         private int MAXSIZE = 81;
         private int ROWNUM = 9;
         private int CENTER = 40;
@@ -48,14 +48,19 @@ namespace Cell
 
         public void DestroyMonoCell(int id)
         {
+            CellView destroyedCellView = _cells[id];
             MonoCell destroyedCell = _cells[id].m_cell;
             RemoveMonoCellFromListByIndex(id);
             destroyedCell.Death();
         }
 
-        private bool BitArrayIsEmpty()
+        private bool CheckMapIsEmpty()
         {
-
+            foreach (bool item in CheckMap)
+            {
+                if (item) return false;
+            }
+            return true;
         }
 
         private int FindMinAvailableID()
@@ -67,22 +72,89 @@ namespace Cell
             return -1;
         }
 
-        private int FindClosedAvailableID(int id)
+        public int FindClosedAvailableID(int id)
         {
-            for (int i = 0; i < CheckMap.Count; i++)
+            Queue<int> ints = new Queue<int>();
+            int num = 0;
+            for (int i = 0; i < 6; i++) 
             {
-                if (!CheckMap[i]) return i;
+                if (id < ROWNUM && (i == 0 || i == 2)) continue;
+                if (id < 2*ROWNUM && i == 1) continue;
+                if (id >= MAXSIZE - ROWNUM && (i == 3 || i == 5)) continue;
+                if (id >= MAXSIZE - 2*ROWNUM && (i == 4)) continue;
+                if ((id % ROWNUM == 0 || id % (2 * ROWNUM) != 0) && (id == 3 || id == 0)) continue;
+                if ((id % (2 * ROWNUM) == 0 || (id % ROWNUM == ROWNUM - 1 && id % (2 * ROWNUM) != ROWNUM - 1)) && id == 2) continue;
+                if ((id % (2 * ROWNUM) == ROWNUM - 1 || id % ROWNUM != ROWNUM - 1) && (id == 2 || id == 5)) continue;
+                if (id - 2*ROWNUM >= 0) if (!CheckMap[id - (2 * ROWNUM)] && i == 1) { 
+                        ints.Enqueue(id - (2 * ROWNUM)); 
+                        num++;
+                    }
+                if (id - ROWNUM - 1 >= 0) if (!CheckMap[id - ROWNUM - 1] && i == 0) {
+                        ints.Enqueue(id - ROWNUM - 1);
+                        num++;
+                    }
+                if (id - ROWNUM >= 0) if (!CheckMap[id - ROWNUM] && i == 2){
+                        ints.Enqueue(id - ROWNUM);
+                        num++;
+                    }
+                if (id + ROWNUM - 1 < MAXSIZE) if (!CheckMap[id + ROWNUM - 1] && i == 3) {
+                        ints.Enqueue(id + ROWNUM - 1);
+                        num++;
+                    }
+                if (id + ROWNUM < MAXSIZE) if (!CheckMap[id + ROWNUM] && i == 5) {
+                        ints.Enqueue(id + ROWNUM);
+                        num++;
+                    }
+                if (id + 2 * ROWNUM < MAXSIZE) if (!CheckMap[id + (2 * ROWNUM)] && i == 4) {
+                        ints.Enqueue(id + (2 * ROWNUM));
+                        num++;
+                    }
             }
-            return -1;
+            if (ints.Count == 0) return -1;
+            int[] arr = new int[num];
+            Debug.Log(num);
+            for (int i = 0; i < num; i++)
+            {
+                arr[i] = ints.Dequeue();
+            }
+            int choose = UnityEngine.Random.Range(0, num);
+            //Debug.Log(choose + ", " + arr[choose]);
+            return arr[choose];
+        }
+
+        public Vector3 ChoosePos(int id)
+        {
+            Vector3 pos = new Vector3(-1.52f*4, 0.88f*2, 0);
+            float d_x = id % ROWNUM * 1.52f + (id / ROWNUM)%2 * 0.76f;
+            float d_y = id / ROWNUM * 0.44f;
+            pos.x += d_x;
+            pos.y -= d_y;
+            return pos;
         }
 
         public void AddMonoCellToList(CellView cellView)
         {
+            int id;
             if(MonoCellList == null) CellListInit();
             MonoCellList.Add(cellView.m_cell);
-            int id = FindMinAvailableID();
+            if (CheckMapIsEmpty()) id = CENTER;
+            else id = FindClosedAvailableID(cellView.target_cell.GetComponent<MonoCell>().id);
+            Debug.Log(id);
             if (id < 0) return;
             else 
+            {
+                cellView.m_cell.SetId(id);
+                _cells.Add(id, cellView);
+                CheckMap[id] = true;
+            }
+        }
+
+        public void AddMonoCellToList(CellView cellView, int id)
+        {
+            if (MonoCellList == null) CellListInit();
+            MonoCellList.Add(cellView.m_cell);
+            if (id < 0) return;
+            else
             {
                 cellView.m_cell.SetId(id);
                 _cells.Add(id, cellView);

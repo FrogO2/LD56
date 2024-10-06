@@ -12,6 +12,8 @@ namespace Cell
         private CellData _cell_data;
         private int _cell_index;
         private float _current_span;
+        private float _current_resource;
+        private CellView m_cellView;
 
         public float resource;
         public float efficiency;
@@ -41,6 +43,7 @@ namespace Cell
         {
             CellDataInit(this.resource, this.efficiency, this.span);
             _current_span = span;
+            _current_resource = resource;
         }
 
         public virtual void Death()
@@ -55,6 +58,8 @@ namespace Cell
             this.cell_data.span = span;
         }
 
+        public void SetCellView(CellView cellView) => m_cellView = cellView;
+
         public void SetId(int id)
         {
             _cell_index = id;
@@ -67,9 +72,11 @@ namespace Cell
             efficiency = data.efficiency;
             span = data.span;
             RefreshCurrentSpan();
+            RefreshCurrentResource();
         }
         public float GetCurrentSpan() => _current_span;
         private void RefreshCurrentSpan() => _current_span = span;
+        private void RefreshCurrentResource() => _current_resource = resource;
 
         private void Awake()
         {
@@ -91,6 +98,22 @@ namespace Cell
             {
                 TypeEventSystem.Global.Send(new OnDestroyCell { monoCell = this});
                 enabled = false;
+            }
+            if (_current_resource > 0)
+            {
+                _current_resource -= Time.deltaTime * 300;
+            }
+            if (_current_resource < 0.5f * resource) 
+            {
+                CellData new_data = new CellData();
+                new_data.resource = resource;
+                new_data.efficiency = efficiency;
+                new_data.span = span;
+                CellView new_cellView = new CellView(this.gameObject, new_data);
+                new_cellView.target_cell = this.gameObject;
+                TypeEventSystem.Global.Send(new OnRegisterMonoCellCreating { cellView = new_cellView });
+                TypeEventSystem.Global.Send<OnCreateCell>();
+                _current_resource += 0.5f*resource;
             }
         }
     }
