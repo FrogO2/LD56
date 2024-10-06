@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cell;
 using UnityEngine;
 
-public class MonoCellController : MonoBehaviour
+public class MonoCellManager : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
