@@ -10,6 +10,12 @@ public class CameraController : MonoBehaviour
  // The distance between the camera and the player.
  private Vector3 offset;
 
+ public Vector2 Po(){
+ float a1=player.transform.position[0];
+ float a2=player.transform.position[1];
+ float t=a1*a1+a2*a2;
+ return(new Vector2 (a1,a2));
+ }
  // Start is called before the first frame update.
  void Start()
     {
