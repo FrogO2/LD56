@@ -1,11 +1,12 @@
+using QFramework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonoCellController : MonoBehaviour
+namespace Cell
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MonoCellManager
     {
         private static MonoCellManager _instance;
         public static MonoCellManager Instance
@@ -51,8 +52,6 @@ public class MonoCellController : MonoBehaviour
             RemoveMonoCellFromListByIndex(id);
             destroyedCell.Death();
         }
-
-
 
         private int FindMinAvailableID()
         {

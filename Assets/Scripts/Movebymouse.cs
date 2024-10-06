@@ -21,7 +21,7 @@ public class Movebymouse : MonoBehaviour
         //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), smooth);
         //direction = Vector3.Normalize(dir);
         Vector3 mouse = Input.mousePosition;
-        //»ñÈ¡ÎïÌå×ø±ê£¬ÎïÌå×ø±êÊÇÊÀ½ç×ø±ê£¬½«Æä×ª»»³ÉÆÁÄ»×ø±ê£¬ºÍÊó±êÒ»Ö±  
+        //è·å–ç‰©ä½“åæ ‡ï¼Œç‰©ä½“åæ ‡æ˜¯ä¸–ç•Œåæ ‡ï¼Œå°†å…¶è½¬æ¢æˆå±å¹•åæ ‡ï¼Œå’Œé¼ æ ‡ä¸€ç›´ 
         Vector3 obj = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 dir = mouse - obj;
         dir.z = 0f;
