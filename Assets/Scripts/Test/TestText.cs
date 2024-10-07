@@ -10,16 +10,17 @@ namespace test
 {
     public class TestText : MonoBehaviour
     {
-        TextMeshPro text;
-        MonoCell cell;
         private void Awake()
         {
-            text = GetComponentInChildren<TextMeshPro>();
-            cell = GetComponent<MonoCell>();
+            for (int i = 0; i < 81; i++)
+            {
+                MonoCellManager.Instance.ChoosePos(i);
+                //TextMeshPro.Instantiate<TextMeshPro>( )
+            }
         }
         private void Update()
         {
-            text.text = cell.GetCurrentSpan().ToString("0.0") + "\nid: " + cell.id;
+            //text.text = cell.id.ToString();
         }
     }
 }

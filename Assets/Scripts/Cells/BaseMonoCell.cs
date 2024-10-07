@@ -5,10 +5,10 @@ namespace Cell
 {
     public enum ComponentType
     {
+        None,
         Devour,
         Produce,
-        Exhaust,
-        None
+        Exhaust
     }
     public struct Component
     {
