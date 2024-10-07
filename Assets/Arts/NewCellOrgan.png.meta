@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d5a8b889022a36547810bbeb6db37717
+guid: df0ae198dd1a2b9448e8b23c67e39291
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Food_3
+      name: NewCellOrgan_0
       rect:
         serializedVersion: 2
-        x: 1049
-        y: 109
-        width: 103
-        height: 101
+        x: 85
+        y: 841
+        width: 451
+        height: 530
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25754638397389244b245429be188e16
-      internalID: 219320182
+      spriteID: 8bff7cbf5d59fcf408a63826161081c6
+      internalID: 1832189428
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Food_4
+      name: NewCellOrgan_1
       rect:
         serializedVersion: 2
-        x: 222
-        y: 90
-        width: 94
-        height: 120
+        x: 581
+        y: 892
+        width: 365
+        height: 494
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8981fd4f6fb1df4eb64799669a953ee
-      internalID: 666330307
+      spriteID: 4f1c99f8638a821448f00f9d6ed44797
+      internalID: -1783751888
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Food_5
+      name: NewCellOrgan_2
       rect:
         serializedVersion: 2
-        x: 389
-        y: 91
-        width: 99
-        height: 121
+        x: 1363
+        y: 877
+        width: 410
+        height: 491
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0f18fb037cb632478bcb9b4420a7e44
-      internalID: 246182379
+      spriteID: f9bf12806948afa4abf669d1ed98067c
+      internalID: 1776985185
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Food_7
+      name: NewCellOrgan_3
       rect:
         serializedVersion: 2
-        x: 685
-        y: 88
-        width: 100
-        height: 100
+        x: 1872
+        y: 1009
+        width: 999
+        height: 231
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c6e8b4f87e07db4a88511f522427c8f
-      internalID: 438202322
+      spriteID: 07f8b21cd7dc4fb48bb9aa0fd13d8734
+      internalID: -2049723008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Food_8
+      name: NewCellOrgan_4
       rect:
         serializedVersion: 2
-        x: 859
-        y: 82
-        width: 109
-        height: 105
+        x: 201
+        y: 377
+        width: 349
+        height: 354
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c94f4a46b5d20c043b1cffecb07f8bbc
-      internalID: -927075565
+      spriteID: ab987443c4dd7ca438ee3a54d4449fd2
+      internalID: 593815980
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Food_9
+      name: NewCellOrgan_5
       rect:
         serializedVersion: 2
-        x: 51
-        y: 75
-        width: 112
-        height: 110
+        x: 736
+        y: 376
+        width: 352
+        height: 350
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01b889dc6d47526439ddf61924d1edbb
-      internalID: -585313541
+      spriteID: 30cd0a4cb6636ff458ce8dcd94af8ee0
+      internalID: -535001908
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Food_10
+      name: NewCellOrgan_6
       rect:
         serializedVersion: 2
-        x: 532
-        y: 70
-        width: 96
-        height: 99
+        x: 1247
+        y: 374
+        width: 349
+        height: 350
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,8 +237,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 213e53fe1ddec454f96b2f790f2b6d8a
-      internalID: 436703632
+      spriteID: 059cfdb54487aec46a1426dbf6ecb84e
+      internalID: 671158805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewCellOrgan_7
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 438
+        width: 1000
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 417968d92e7ec6048851c2eace6cb791
+      internalID: -1072868350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewCellOrgan_8
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 893
+        width: 381
+        height: 489
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d58d764a3f438648a7f57553b3341a7
+      internalID: -698796120
       vertices: []
       indices: 
       edges: []
@@ -254,17 +296,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Food_0: -117627863
-      Food_1: 1888812727
-      Food_10: 436703632
-      Food_2: -1094430834
-      Food_3: 219320182
-      Food_4: 666330307
-      Food_5: 246182379
-      Food_6: 2047635706
-      Food_7: 438202322
-      Food_8: -927075565
-      Food_9: -585313541
+      NewCellOrgan_0: 1832189428
+      NewCellOrgan_1: -1783751888
+      NewCellOrgan_2: 1776985185
+      NewCellOrgan_3: -2049723008
+      NewCellOrgan_4: 593815980
+      NewCellOrgan_5: -535001908
+      NewCellOrgan_6: 671158805
+      NewCellOrgan_7: -1072868350
+      NewCellOrgan_8: -698796120
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

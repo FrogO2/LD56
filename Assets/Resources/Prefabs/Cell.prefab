@@ -388,6 +388,7 @@ GameObject:
   - component: {fileID: 9063706915799557799}
   - component: {fileID: 8135141752441933977}
   - component: {fileID: 6104707991908502909}
+  - component: {fileID: 4533294080988538253}
   m_Layer: 0
   m_Name: Membrane
   m_TagString: Untagged
@@ -549,6 +550,22 @@ MonoBehaviour:
   m_Creator: {fileID: 0}
   m_Modifiers: []
   m_ColliderSegment: []
+--- !u!111 &4533294080988538253
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265281962600024103}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 82b358a2f4b3833498a140de5ff335de, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 82b358a2f4b3833498a140de5ff335de, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1530822044442857074
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,7 +2159,7 @@ Animator:
   m_GameObject: {fileID: 8458955302585390876}
   m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 002974343341cb94f9dfb2dd98b00428, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0d352f75fb591894f8a11c934fa27914, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

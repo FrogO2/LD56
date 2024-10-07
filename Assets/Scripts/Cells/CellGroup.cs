@@ -1,10 +1,11 @@
 
-
+using System.Collections;
 using QFramework;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using component;
 
 namespace Cell
 {
@@ -32,6 +33,14 @@ namespace Cell
             TypeEventSystem.Global.Register<OnCreateCell>(e =>
             {
                 GameObject obj = CellFactory.Create();
+                MonoCell cell = obj.GetComponent<MonoCell>();
+                for (int j = 0; j < 6; j++)
+                {
+                    cell.SetComponent(j, (ComponentType)UnityEngine.Random.Range(0, 4));
+                }
+                ComponentController controller = cell.GetComponent<ComponentController>();
+                controller.RefreshComponents();
+                controller.UpdateAllComponents();
                 BFS bfs = new BFS();
                 var a = bfs.GetAll();
                 string name = "";
