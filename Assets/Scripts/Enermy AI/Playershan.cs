@@ -3,9 +3,9 @@ using UnityEngine;
 public class Playershan : MonoBehaviour
 {
     public EnermyDead EnermyDead;
-    public float radius = 5;
     public LayerMask collisionMask;
-    public Vector3 k;
+    private Vector2 k;
+    public Vector2 size = new Vector2(2,3);
     public GameObject  core;
     public GameObject  devour;
     public float force=1;
@@ -13,7 +13,8 @@ public class Playershan : MonoBehaviour
     {
         k=-core.transform.position +devour.transform.position;
         k=k.normalized *3;
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position +k, radius, collisionMask);
+        float angle = Vector2.Angle(new Vector2(0,0), k);
+        Collider2D[] hitColliders = Physics2D.OverlapBoxAll(transform.position,size,angle,collisionMask);
         foreach (var hitCollider in hitColliders)
         {
             if(hitCollider.gameObject.name=="Square(Clone)"){
