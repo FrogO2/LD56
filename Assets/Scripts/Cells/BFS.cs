@@ -18,6 +18,8 @@ namespace Cell
         None=-1
     }
     
+    
+    
     public class BFS
     {
         MonoCellManager cellManager;
@@ -27,20 +29,43 @@ namespace Cell
             cellManager = MonoCellManager.Instance;
         }
         
+        public Direction GetRelativeDirection(int id1, int id2)
+        {
+            // 获取 id1 相邻六个方向的 ID
+            int leftUpId = cellManager.LeftUpCell(id1);
+            int rightUpId = cellManager.RightUpCell(id1);
+            int leftDownId = cellManager.LeftDownCell(id1);
+            int rightDownId = cellManager.RightDownCell(id1);
+            int upId = cellManager.UpCell(id1);
+            int downId = cellManager.DownCell(id1);
+
+            // 判断 id2 是否与 id1 相邻
+            if (id2 == leftUpId) return Direction.LeftUp;
+            if (id2 == rightUpId) return Direction.RightUp;
+            if (id2 == leftDownId) return Direction.LeftDown;
+            if (id2 == rightDownId) return Direction.RightDown;
+            if (id2 == upId) return Direction.Up;
+            if (id2 == downId) return Direction.Down;
+
+            // 如果 id2 不在 id1 的相邻方向，返回 None
+            return Direction.None;
+        }
+        
         /// <summary>
         /// 使用BFS搜索相连的管道
         /// </summary>
         /// <param name="startId">起始棋子的ID</param>
         /// <param name="type">组件类型</param>
+        /// <param name="direction">初始方向</param>
         /// <returns>相连管道的ID列表</returns>
-        public List<int> GetConnectedPipes(int startId, ComponentType type)
+        public List<int> GetConnectedPipes(int startId, ComponentType type, Direction direction)
         {
             Queue<(int, Direction)> queue = new Queue<(int, Direction)>(); // BFS队列，包含当前cell的ID和它的方向
             HashSet<int> visited = new HashSet<int>(); // 已访问的cell
             List<int> connectedCells = new List<int>(); // 存储连通的cell
 
             // 初始起点入队，方向为Direction.None
-            queue.Enqueue((startId, Direction.None));
+            queue.Enqueue((startId, direction));
             visited.Add(startId);
             connectedCells.Add(startId);
 
@@ -109,25 +134,75 @@ namespace Cell
             }
 
 
-            List<int> devours = new List<int>();
-            List<List<int>> producePipes = new List<List<int>>();
-            List<List<int>> exhaustPipes = new List<List<int>>();
+            var devours = new List<int[]>();
+            var producePipes = new List<List<int>>();
+            var exhaustPipes = new List<List<int>>();
             
             // 找到每个入口相连的能量细胞器
             foreach (var entrance in availableEntrances)
             {
                 var produces = GetConnectedProduce(entrance[0], (Direction)entrance[1]);
-                var availableProducePipes = new List<List<int>>();
+                var tempDevours = new List<int[]>();
+                var tempProducePipes = new List<List<int>>();
+
                 foreach (var produce in produces)
                 {
-                    availableProducePipes.Add(GetConnectedPipes(produce, ComponentType.Produce));
+                    var producePipe = GetConnectedPipes(entrance[0], ComponentType.Produce, (Direction)produce);
+                    Direction lastDirection = (Direction)produce;
+                    
+                    var exhausts = new List<int[]>();
+                    // 找到能量相连的排泄
+                    for (int i = 0; i < producePipe.Count - 1; i++)
+                    {
+                        var ex = GetConnectedDevour(producePipe[i], lastDirection);
+
+                        for (int j = 0; j < ex.Length; j++)
+                        {
+                            if (ex[i] != -1)
+                            {
+                                exhausts.Add(new int[] {ex[j], j});
+                            }
+                        }
+                        
+                        lastDirection = GetRelativeDirection(producePipe[i], producePipe[i + 1]);
+                    }
+
+                    foreach (var exhaust in exhausts)
+                    {
+                        GetConnectedPipes(exhaust[0], ComponentType.Exhaust, (Direction)exhaust[1]);
+                    }
+                    tempDevours.Add(entrance);
+                    tempProducePipes.Add();
                 }
                 
-                // TODO:找到能量相连的排泄
-                // entrance.
+                
             }
 
             return new List<List<int>>();
+        }
+
+        private int[] GetConnectedDevour(int id, Direction direction)
+        {
+            int[] connected = {-1, -1, -1, -1, -1, -1};
+            int[] surroundingCells = {
+                cellManager.UpCell(id),
+                cellManager.RightUpCell(id),
+                cellManager.RightDownCell(id),
+                cellManager.DownCell(id),
+                cellManager.LeftDownCell(id),
+                cellManager.LeftUpCell(id)
+            };
+            
+            var connectedComponents = GetConnectedComponents(id, ComponentType.Produce, direction);
+            for (int i = 0; i < connectedComponents.Count; i++)
+            {
+                if (ComponentType.Produce == cellManager._cells[surroundingCells[i]].m_cell.m_components.allcomponents[(i + 3) % 6])
+                {
+                    connected[i] = surroundingCells[i];
+                }
+            }
+
+            return connected;
         }
         
 
@@ -231,7 +306,30 @@ namespace Cell
             
             for (int i = 0; i < index.Length; i++)
             {
-                if (index[i] != -1 && components[id] == ComponentType.Exhaust)
+                if (index[i] == -1 && components[i] == ComponentType.Exhaust)
+                {
+                    return (Direction)i;
+                }
+            }
+            return Direction.None;
+        }
+        
+        private Direction IsExit(int id, Direction direction)
+        {
+            int[] index = {
+                cellManager.UpCell(id),
+                cellManager.RightUpCell(id),
+                cellManager.RightDownCell(id),
+                cellManager.DownCell(id),
+                cellManager.LeftDownCell(id),
+                cellManager.LeftUpCell(id)
+            };
+            
+            var components = GetConnectedComponents(id, ComponentType.Exhaust, direction);
+            
+            for (int i = 0; i < index.Length; i++)
+            {
+                if (index[i] == -1 && components.Contains(i))
                 {
                     return (Direction)i;
                 }
@@ -261,7 +359,7 @@ namespace Cell
             
             for (int i = 0; i < index.Length; i++)
             {
-                if (index[i] != -1 && components[id] == ComponentType.Devour)
+                if (index[i] == -1 && components[i] == ComponentType.Devour)
                 {
                     return (Direction)i;
                 }

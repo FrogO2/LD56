@@ -217,6 +217,7 @@ namespace Cell
             }
             return -1;
         }
+        
 
         public void Detect(CellView cellView, ComponentType type)
         {
