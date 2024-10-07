@@ -44,12 +44,22 @@ namespace Cell
                 BFS bfs = new BFS();
                 var a = bfs.GetAll();
                 string name = "";
-                List<int> s = a.Item2[0];
-                foreach (var VARIABLE in s)
+                List<int> s;
+                if (a.Item2.Count > 0)
                 {
-                    name += VARIABLE + " ";
+                    s = a.Item2[0];
+                    foreach (var VARIABLE in s)
+                    {
+                        name += VARIABLE + " ";
+                    }
+                    Debug.LogWarning(name);
                 }
-                Debug.LogWarning(name);
+                else
+                {
+                    Debug.LogWarning("No cell found");
+                }
+                
+
             }).UnRegisterWhenGameObjectDestroyed(this);
             TypeEventSystem.Global.Register<OnRegisterMonoCellCreating>(e =>
             {
