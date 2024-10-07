@@ -14,7 +14,7 @@ public class Move : MonoBehaviour
     
     private void Update()
     {
-        float count=MonoCellManager.Instance.MonoCellList.Count;
+        float count=math.max(MonoCellManager.Instance.MonoCellList.Count,1);
         float x = (count + countplusa) / count;
         float moveX = Input.GetAxis("Horizontal");
         tiltAngle += -aglspeed * moveX;
@@ -22,7 +22,7 @@ public class Move : MonoBehaviour
     }
     private void LateUpdate()
     {
-        float count = MonoCellManager.Instance.MonoCellList.Count;
+        float count = math.max(MonoCellManager.Instance.MonoCellList.Count, 1);
         float x = (count + countplusa) / count;
         float moveY = Input.GetAxis("Vertical");
         Vector3 dir= new(math.sin(-tiltAngle*math.PI/180), math.cos(-tiltAngle * math.PI / 180), 0);
