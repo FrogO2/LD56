@@ -54,7 +54,6 @@ namespace test
                         controller.RefreshComponents();
                         controller.UpdateAllComponents();
                     }
-                    
                 }
             }
         }

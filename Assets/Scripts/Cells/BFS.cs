@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 namespace Cell
 {
@@ -67,6 +69,67 @@ namespace Cell
 
             return connectedCells;
         }
+
+        private List<int> GetConnectedProduce(int id, Direction lastDirection)
+        {
+            List<int> connected = new List<int>();
+            ComponentType type = ComponentType.Produce;
+            var components = cellManager._cells[id].m_cell.m_components.allcomponents;
+
+            if (components[((int)lastDirection + 2) % 6]==type)
+            {
+                connected.Add(((int)lastDirection + 2) % 6);
+            }
+            
+            if (components[((int)lastDirection + 4) % 6]==type)
+            {
+                connected.Add(((int)lastDirection + 4) % 6);
+            }
+
+            return connected;
+
+        }
+
+        public List<List<int>> GetAll()
+        {
+            // List<int> availableIds = new List<int>();
+            // 找到所有可用的入口
+            List<int[]> availableEntrances = new List<int[]>();
+            for (int i = 0; i < cellManager.CheckMap.Length; i++)
+            {
+                if (cellManager.CheckMap[i])
+                {
+                    var entry = IsEntrance(i);
+                    if (entry != Direction.None)
+                    {
+                        int[] j = { i, (int)entry };
+                        availableEntrances.Add(j);
+                    }
+                }
+            }
+
+
+            List<int> devours = new List<int>();
+            List<List<int>> producePipes = new List<List<int>>();
+            List<List<int>> exhaustPipes = new List<List<int>>();
+            
+            // 找到每个入口相连的能量细胞器
+            foreach (var entrance in availableEntrances)
+            {
+                var produces = GetConnectedProduce(entrance[0], (Direction)entrance[1]);
+                var availableProducePipes = new List<List<int>>();
+                foreach (var produce in produces)
+                {
+                    availableProducePipes.Add(GetConnectedPipes(produce, ComponentType.Produce));
+                }
+                
+                // TODO:找到能量相连的排泄
+                // entrance.
+            }
+
+            return new List<List<int>>();
+        }
+        
 
 
         /// <summary>
@@ -181,7 +244,7 @@ namespace Cell
         /// </summary>
         /// <param name="id">The ID of the cell to check.</param>
         /// <returns>The direction of the entry if found, otherwise Direction.None.</returns>
-        private Direction IsEntry(int id)
+        private Direction IsEntrance(int id)
         {
             int[] index = {
                 cellManager.UpCell(id),
