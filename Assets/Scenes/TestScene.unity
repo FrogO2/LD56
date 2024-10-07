@@ -191,16 +191,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d85744a36b62f6499afe120e541b435, type: 3}
---- !u!1 &555358803 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6375632004258990793, guid: 6d85744a36b62f6499afe120e541b435, type: 3}
-  m_PrefabInstance: {fileID: 380511384}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &619976277 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6375632004258990793, guid: 6e8584f8f554d9a43bbff2671f966915, type: 3}
-  m_PrefabInstance: {fileID: 2114872985}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &708345247
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   k1: 0
-  square: {fileID: 1229550109}
+  square: {fileID: 0}
   res: 0
   Mono: {fileID: 0}
   scale: 0
@@ -614,11 +604,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1925430077 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6375632004258990793, guid: 0fa9580e1915cdb4fbcb221262955b53, type: 3}
-  m_PrefabInstance: {fileID: 1038433558}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1927714024
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,10 +791,10 @@ MonoBehaviour:
   CameraController: {fileID: 1927714025}
   OB: {fileID: 1229550109}
   Robot: {fileID: 1488284054}
-  OB1: {fileID: 555358803}
-  OB2: {fileID: 1925430077}
-  OB3: {fileID: 619976277}
-  Posibility: {x: 1, y: 1, z: 1, w: 1}
+  OB1: {fileID: 0}
+  OB2: {fileID: 0}
+  OB3: {fileID: 0}
+  Posibility: {x: 0, y: 0, z: 0, w: 0}
   EnermyNumber: 2000
   EA: 0
   E: 0

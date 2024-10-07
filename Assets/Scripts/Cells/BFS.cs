@@ -172,7 +172,7 @@ namespace Cell
                         GetConnectedPipes(exhaust[0], ComponentType.Exhaust, (Direction)exhaust[1]);
                     }
                     tempDevours.Add(entrance);
-                    tempProducePipes.Add();
+                    //tempProducePipes.Add();
                 }
                 
                 
