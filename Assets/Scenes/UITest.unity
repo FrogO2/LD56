@@ -2364,11 +2364,6 @@ MonoBehaviour:
   ExitButton: {fileID: 1097657508}
   BackButton: {fileID: 1577978928}
   EXITButton: {fileID: 704453374}
---- !u!1 &555358803 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6375632004258990793, guid: 6d85744a36b62f6499afe120e541b435, type: 3}
-  m_PrefabInstance: {fileID: 380511384}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &574491360
 GameObject:
   m_ObjectHideFlags: 0
@@ -2723,11 +2718,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606202737}
   m_CullTransparentMesh: 1
---- !u!1 &619976277 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6375632004258990793, guid: 6e8584f8f554d9a43bbff2671f966915, type: 3}
-  m_PrefabInstance: {fileID: 2114872985}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &639973451
 GameObject:
   m_ObjectHideFlags: 0
@@ -9143,11 +9133,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920804374}
   m_CullTransparentMesh: 1
---- !u!1 &1925430077 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6375632004258990793, guid: 0fa9580e1915cdb4fbcb221262955b53, type: 3}
-  m_PrefabInstance: {fileID: 1038433558}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1927714024
 GameObject:
   m_ObjectHideFlags: 0
