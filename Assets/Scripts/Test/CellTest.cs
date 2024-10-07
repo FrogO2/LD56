@@ -1,4 +1,5 @@
 using Cell;
+using component;
 using QFramework;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,9 +29,33 @@ namespace test
                 Debug.Log("send msg");
                 cellData.resource = 1000;
                 cellData.efficiency = 10;
-                cellData.span = 5;
+                cellData.span = 60;
                 CellView test_cell = new CellView();
                 test_cell.CreateWithParent(cellData, initTransform);
+            }
+
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                Debug.Log("send msg");
+                cellData.resource = 1000;
+                cellData.efficiency = 10;
+                cellData.span = 1000;
+                for (int i = 3; i < 54; i+=9)
+                {
+                    for (int offset = 0; offset < 5; offset++)
+                    {
+                        CellView test_cell = new CellView();
+                        test_cell.CreateWithParentWithPos(cellData, initTransform, i + offset);
+                        for (int j = 0; j < 6; j++)
+                        {
+                            test_cell.m_cell.SetComponent(j, (ComponentType)Random.Range(0, 5));
+                        }
+                        ComponentController controller = test_cell.m_cell.GetComponent<ComponentController>();
+                        controller.RefreshComponents();
+                        controller.UpdateAllComponents();
+                    }
+                    
+                }
             }
         }
     }

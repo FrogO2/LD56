@@ -233,6 +233,20 @@ namespace Cell
             return pos;
         }
 
+        public void AddMonoCellToListWithID(CellView cellView, int index)
+        {
+            int id = index;
+            if (MonoCellList == null) CellListInit();
+            MonoCellList.Add(cellView.m_cell);
+            if (id < 0) return;
+            else
+            {
+                cellView.m_cell.SetId(id);
+                _cells.Add(id, cellView);
+                CheckMap[id] = true;
+            }
+        }
+
         public void AddMonoCellToList(CellView cellView)
         {
             int id;
@@ -240,7 +254,6 @@ namespace Cell
             MonoCellList.Add(cellView.m_cell);
             if (CheckMapIsEmpty()) id = CENTER;
             else id = FindClosedAvailableID(cellView.target_cell.GetComponent<MonoCell>().id);
-            Debug.Log(id);
             if (id < 0) return;
             else 
             {

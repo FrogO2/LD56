@@ -93,6 +93,23 @@ namespace Cell
             return target;
         }
 
+        public GameObject CreateWithParentWithPos(CellData cellData, Transform transform, int index)
+        {
+            GameObject target = null;
+
+            if (target_cell == null)
+            {
+                Debug.Log("no target cell");
+                target = Resources.Load<GameObject>(util.Pathes.BaseCellPath);
+                m_cell_obj = GameObject.Instantiate<GameObject>(target, MonoCellManager.Instance.ChoosePos(index), new Quaternion(), transform);
+            }
+
+            m_cell = m_cell_obj.GetComponent<MonoCell>();
+            m_cell.SetCellData(cellData);
+            MonoCellManager.Instance.AddMonoCellToListWithID(this, index);
+            return target;
+        }
+
         public GameObject CopyCell()
         {
             if (target_cell == null) return Create(data, MonoCellManager.Instance.ChoosePos(40));
