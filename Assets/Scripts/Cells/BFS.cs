@@ -175,5 +175,35 @@ namespace Cell
             }
             return Direction.None;
         }
+        
+        /// <summary>
+        /// Checks if the specified cell has an Devour Component with no obstacles and returns the direction of the entry.
+        /// </summary>
+        /// <param name="id">The ID of the cell to check.</param>
+        /// <returns>The direction of the entry if found, otherwise Direction.None.</returns>
+        private Direction IsEntry(int id)
+        {
+            int[] index = {
+                cellManager.UpCell(id),
+                cellManager.RightUpCell(id),
+                cellManager.RightDownCell(id),
+                cellManager.DownCell(id),
+                cellManager.LeftDownCell(id),
+                cellManager.LeftUpCell(id)
+            };
+            
+            CellView cellView = cellManager._cells[id];
+            
+            var components = cellView.m_cell.m_components.allcomponents;
+            
+            for (int i = 0; i < index.Length; i++)
+            {
+                if (index[i] != -1 && components[id] == ComponentType.Devour)
+                {
+                    return (Direction)i;
+                }
+            }
+            return Direction.None;
+        }
     }
 }
