@@ -33,7 +33,7 @@ namespace Cell
         private float _current_span;
         private float _current_resource;
         private CellView m_cellView;
-        //private SpriteRenderer m_spriteRenderer;
+        private MonoCellManager m_monoCellManager = MonoCellManager.Instance;
 
         public float resource;
         public float efficiency;
@@ -47,7 +47,7 @@ namespace Cell
         public bool isOuter => m_components.is_outer_d || m_components.is_outer_ru || m_components.is_outer_lu ||
                                 m_components.is_outer_u || m_components.is_outer_ld || m_components.is_outer_rd;
 
-        
+        public bool NoSpace => m_monoCellManager.FindClosedAvailableID(id) < 0;   
 
         public CellData cell_data
         { 
@@ -302,9 +302,9 @@ namespace Cell
                 enabled = false;
             }
 
-            _current_resource += 10*Time.deltaTime;
+            if (_current_resource < resource) _current_resource += 10*Time.deltaTime;
 
-            if (_current_resource >= resource && enabled) 
+            if (_current_resource >= resource && enabled && !NoSpace) 
             {
                 CellData new_data = new CellData();
                 new_data.resource = resource;

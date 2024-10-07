@@ -289,9 +289,9 @@ namespace Cell
             // 逆时针
             for (int i = from; i > from - thres; i--)
             {
-                if (type == cellManager._cells[id].m_cell.m_components.allcomponents[i % 6])
+                if (type == cellManager._cells[id].m_cell.m_components.allcomponents[(i + 6) % 6])
                 {
-                    organelles.Add(NewOrganelle(type, (Direction)(i % 6), id));
+                    organelles.Add(NewOrganelle(type, (Direction)((i + 6) % 6), id));
                 }
                 else
                 {

@@ -37,17 +37,37 @@ namespace Cell
             {
                 Debug.Log("no target cell");
                 target = Resources.Load<GameObject>(util.Pathes.BaseCellPath);
-                m_cell_obj = GameObject.Instantiate<GameObject>(target, pos, new Quaternion());
+                m_cell_obj = GameObject.Instantiate<GameObject>(target, pos, Quaternion.identity);
             }
             else
             {
-                target = GameObject.Instantiate<GameObject>(target_cell, pos, new Quaternion(), target_cell.transform.parent);
+                target = GameObject.Instantiate<GameObject>(target_cell, pos, Quaternion.identity, target_cell.transform.parent);
                 m_cell_obj = target;
             }
-            
+
             m_cell = m_cell_obj.GetComponent<MonoCell>();
             m_cell.SetCellData(cellData);
             MonoCellManager.Instance.AddMonoCellToList(this);
+
+            // 添加 SpringJoint2D 并连接到父对象
+            Rigidbody2D parentRb = target.transform.parent?.GetComponent<Rigidbody2D>(); // 获取父对象的 Rigidbody2D
+            if (parentRb != null)
+            {
+                SpringJoint2D springJoint = target.AddComponent<SpringJoint2D>(); // 添加 SpringJoint2D 组件
+                springJoint.connectedBody = parentRb; // 将 SpringJoint2D 的连接体设置为父对象的 Rigidbody2D
+
+                // 调整 SpringJoint2D 的参数（可根据实际需求调整）
+                springJoint.autoConfigureDistance = false; // 禁用自动距离配置
+                springJoint.distance = 0; // 弹簧原始距离为 0，固定在原位
+                springJoint.dampingRatio = 0.5f; // 阻尼比，可以调整弹簧的阻尼效果
+                springJoint.frequency = 10.0f; // 弹簧频率，控制弹簧的回弹速度
+                Debug.LogWarning("Working");
+            }
+            else
+            {
+                Debug.LogWarning("Parent object does not have a Rigidbody2D component!");
+            }
+
             return target;
         }
 
@@ -55,17 +75,18 @@ namespace Cell
         {
             GameObject target = null;
             int new_id = -1;
+
             if (target_cell == null)
             {
                 Debug.Log("no target cell");
                 target = Resources.Load<GameObject>(util.Pathes.BaseCellPath);
-                m_cell_obj = GameObject.Instantiate<GameObject>(target, new Vector3(0, 0, 0), new Quaternion(), GameObject.Find("CellGroup").transform);
+                m_cell_obj = GameObject.Instantiate<GameObject>(target, new Vector3(0, 0, 0), Quaternion.identity, GameObject.Find("CellGroup").transform);
             }
             else
             {
                 new_id = MonoCellManager.Instance.FindClosedAvailableID(target_cell.GetComponent<MonoCell>().id);
                 Vector3 pos = MonoCellManager.Instance.ChoosePos(new_id);
-                target = GameObject.Instantiate<GameObject>(target_cell, pos, new Quaternion(), target_cell.transform.parent);
+                target = GameObject.Instantiate<GameObject>(target_cell, pos, Quaternion.identity, target_cell.transform.parent);
                 target.transform.localPosition = pos;
                 m_cell_obj = target;
             }
@@ -73,8 +94,29 @@ namespace Cell
             m_cell = m_cell_obj.GetComponent<MonoCell>();
             m_cell.SetCellData(cellData);
             MonoCellManager.Instance.AddMonoCellToList(this, new_id);
+
+            // 添加 SpringJoint2D 并连接到父对象
+            Rigidbody2D parentRb = target.transform.parent?.GetComponent<Rigidbody2D>(); // 获取父对象的 Rigidbody2D
+            if (parentRb != null)
+            {
+                SpringJoint2D springJoint = target.AddComponent<SpringJoint2D>(); // 添加 SpringJoint2D 组件
+                springJoint.connectedBody = parentRb; // 将 SpringJoint2D 的连接体设置为父对象的 Rigidbody2D
+
+                // 调整 SpringJoint2D 的参数（可根据实际需求调整）
+                springJoint.autoConfigureDistance = false; // 禁用自动距离配置
+                springJoint.distance = 0; // 弹簧原始距离为 0，固定在原位
+                springJoint.dampingRatio = 0.5f; // 阻尼比，可以调整弹簧的阻尼效果
+                springJoint.frequency = 10.0f; // 弹簧频率，控制弹簧的回弹速度
+                Debug.LogWarning("Working");
+            }
+            else
+            {
+                Debug.LogWarning("Parent object does not have a Rigidbody2D component!");
+            }
+
             return target;
         }
+
 
         public GameObject CreateWithParent(CellData cellData, Transform transform)
         {
