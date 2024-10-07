@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using UnityEngine.Audio;
 
-public class OptionsController : MonoBehaviour
+public class OptionsController1 : MonoBehaviour
 {
     // TODO: is this the right way to connect two scripts?
     public MenuController menuController;
@@ -36,6 +36,8 @@ public class OptionsController : MonoBehaviour
     [Header("Other Elements")]
     public Button SaveButton;
     public Button ExitButton;
+    public Button BackButton;
+    public Button EXITButton;
     // [Header("Event system")]
     // [Tooltip("Event system")]
     // public EventSystem uiEventSystem;
@@ -63,6 +65,8 @@ public class OptionsController : MonoBehaviour
         string filePath = Application.persistentDataPath + "/" + "settings.json";
         SaveButton.onClick.AddListener(()=>{menuAudio.Play();Apply();_SavedSettings.Save(filePath);});
         ExitButton.onClick.AddListener(()=>{Cancel();menuController.MainMenu();});
+        EXITButton.onClick.AddListener(()=>{Cancel();menuController.Exit();});
+        BackButton.onClick.AddListener(()=>{Cancel();menuController.BackToTitle();});
         //stage saved settings
         if (_SavedSettings.Load(filePath))
         {
@@ -269,6 +273,7 @@ public class OptionsController : MonoBehaviour
 
         StartCoroutine(Wait());
     }
+    
 
     /// <summary>
     /// Apply the video settings (UI->stage->in-game)

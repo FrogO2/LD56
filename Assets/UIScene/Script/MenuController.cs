@@ -84,6 +84,7 @@ public class MenuController : MonoBehaviour
                 introPanel.SetActive(false);
                 eventSystem.SetSelectedGameObject(optionsFirstSelectedButton.gameObject);
                 break;
+
             case Panels.Intro:
                 _State = Panels.Intro;
                 titlePanel.SetActive(false);
@@ -100,17 +101,23 @@ public class MenuController : MonoBehaviour
         // introAnimator.SetTrigger("PlayIntro");
         StartCoroutine(LoadGameScene());
     }
-
+    public void BackToTitle()
+    {
+        SwitchToPanel(Panels.Intro);
+        // introAnimator.SetTrigger("PlayIntro");
+        StartCoroutine(LoadGameSceneMain());
+    }
     public void MainMenu()
     {
+        Time.timeScale=1;
         SwitchToPanel(Panels.MainMenu);
     }
     
     private void Options()
     { 
+        Time.timeScale=0;
         SwitchToPanel(Panels.Options);
     }
-    
     private void Credits()
     {
         // TODO: make Credits panel
@@ -125,8 +132,28 @@ public class MenuController : MonoBehaviour
     // Load the game scene asynchronously
     private IEnumerator LoadGameScene()
     {
+        Time.timeScale=1;
         yield return new WaitForSeconds(5f);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("TestScene");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            // TODO: Load indicator?
+            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+            Debug.Log("Loading progress: " + (progress * 100) + "%");
+
+            yield return null;
+        }
+        Debug.Log("Loading complete");
+        // yield return new WaitUntil(() => !introAnimator.GetCurrentAnimatorStateInfo(0).IsName("IntroAnimation"));
+
+    }
+    private IEnumerator LoadGameSceneMain()
+    {
+        Time.timeScale=1;
+        yield return new WaitForSeconds(5f);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main Menu");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
