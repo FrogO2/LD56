@@ -85,12 +85,12 @@ namespace Cell
         {
             CellDataInit(this.resource, this.efficiency, this.span);
             _current_span = span;
-            _current_resource = resource;
+            _current_resource = 0;
             m_components = new Components();
             OuterUpdate();
             MsgInit();
-            m_components.allcomponents = new List<ComponentType> { m_components.up, m_components.right_up, m_components.right_down,
-                                                            m_components.down, m_components.left_down, m_components.left_up};
+            m_components.allcomponents = new List<ComponentType> { ComponentType.None, ComponentType.None, ComponentType.None,
+                                                                    ComponentType.None, ComponentType.None, ComponentType.None};
             m_components.allouters = new List<bool> { m_components.is_outer_u, m_components.is_outer_ru, m_components.is_outer_rd,
                                                     m_components.is_outer_d, m_components.is_outer_ld, m_components.is_outer_lu};
         }
@@ -158,7 +158,7 @@ namespace Cell
         }
         public float GetCurrentSpan() => _current_span;
         private void RefreshCurrentSpan() => _current_span = span;
-        private void RefreshCurrentResource() => _current_resource = resource;
+        private void RefreshCurrentResource() => _current_resource = 0;
 
         public void OuterUpdate()
         {
@@ -216,16 +216,16 @@ namespace Cell
                 if (id - 2 * MonoCellManager.ROWNUM >= 0)
                     if (!MonoCellManager.Instance.CheckMap[id - (2 * MonoCellManager.ROWNUM)])
                         m_components.is_outer_u = true;
-                if (id - MonoCellManager.ROWNUM >= 0)
+                if (id - MonoCellManager.ROWNUM - 1 >= 0)
                     if (!MonoCellManager.Instance.CheckMap[id - MonoCellManager.ROWNUM -1])
                         m_components.is_outer_lu = true;
-                if (id - MonoCellManager.ROWNUM + 1 >= 0)
+                if (id - MonoCellManager.ROWNUM >= 0)
                     if (!MonoCellManager.Instance.CheckMap[id - MonoCellManager.ROWNUM])
                         m_components.is_outer_ru = true;
-                if (id + MonoCellManager.ROWNUM < MonoCellManager.MAXSIZE)
+                if (id + MonoCellManager.ROWNUM - 1 < MonoCellManager.MAXSIZE)
                     if (!MonoCellManager.Instance.CheckMap[id + MonoCellManager.ROWNUM - 1])
                         m_components.is_outer_ld = true;
-                if (id + MonoCellManager.ROWNUM + 1 < MonoCellManager.MAXSIZE)
+                if (id + MonoCellManager.ROWNUM < MonoCellManager.MAXSIZE)
                     if (!MonoCellManager.Instance.CheckMap[id + MonoCellManager.ROWNUM])
                         m_components.is_outer_rd = true;
                 if (id + 2 * MonoCellManager.ROWNUM < MonoCellManager.MAXSIZE)
@@ -233,8 +233,20 @@ namespace Cell
                         m_components.is_outer_d = true;
             }
         }
-        
-        
+        public void OuterListUpdate()
+        {
+            if (m_components.is_outer_u) m_components.allouters[0] = true;
+            if (m_components.is_outer_ru) m_components.allouters[1] = true;
+            if (m_components.is_outer_rd) m_components.allouters[2] = true;
+            if (m_components.is_outer_d) m_components.allouters[3] = true;
+            if (m_components.is_outer_ld) m_components.allouters[4] = true;
+            if (m_components.is_outer_lu) m_components.allouters[5] = true;
+        }
+
+        public void AddResource(int num)
+        {
+            _current_resource += num;
+        }
 
         private void Awake()
         {
@@ -257,11 +269,8 @@ namespace Cell
                 TypeEventSystem.Global.Send(new OnDestroyCell { monoCell = this});
                 enabled = false;
             }
-            if (_current_resource > 0)
-            {
-                _current_resource -= Time.deltaTime * 300;
-            }
-            if (_current_resource < 0.5f * resource) 
+
+            if (_current_resource >= resource) 
             {
                 CellData new_data = new CellData();
                 new_data.resource = resource;
@@ -271,18 +280,18 @@ namespace Cell
                 new_cellView.target_cell = this.gameObject;
                 TypeEventSystem.Global.Send(new OnRegisterMonoCellCreating { cellView = new_cellView });
                 TypeEventSystem.Global.Send<OnCreateCell>();
-                _current_resource += 0.5f*resource;
+                _current_resource -= resource;
             }
         }
 
         private void OnMouseEnter()
         {
-            
+            Debug.Log("Mouse Enter");
         }
 
         private void OnMouseExit()
         {
-            
+            Debug.Log("Mouse Exit");
         }
     }
 }
