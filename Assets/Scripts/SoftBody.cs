@@ -7,7 +7,7 @@ public class SoftBody : MonoBehaviour
 {
 #region Constants
 
-private const float splineOffset = 0.2f;
+private const float splineOffset = 1f;
 #endregion
 
     #region Fields
@@ -36,10 +36,16 @@ private const float splineOffset = 0.2f;
 
     private void UpdateVerticies()
     {
-        for (int i = 0; i < points.Length - 1; i++)
+        Vector2 _center = Vector2.zero;
+        for (int i = 0; i < 6; i++)
+        {
+            _center = new Vector2(points[i].localPosition.x/(points.Length), points[i].localPosition.y/(points.Length)) + _center;
+        }
+        
+        for (int i = 0; i < 6; i++)
         {
             Vector2 _vertex = points[i].localPosition;
-            Vector2 _towardsCenter = (Vector2.zero - _vertex).normalized;
+            Vector2 _towardsCenter = (_center - _vertex).normalized;
             float _colliderRadius = points[i].gameObject.GetComponent<CircleCollider2D>().radius;
             try
             {
@@ -64,10 +70,6 @@ private const float splineOffset = 0.2f;
     
     private void UpdateSprites()
     {
-        if (points.Length != 7 || sprites.Length != 6)
-        {
-            return;
-        }
 
         // 在每条线的中点位置放置Sprite
         for (int i = 0; i < 6; i++)
@@ -76,7 +78,7 @@ private const float splineOffset = 0.2f;
             
             SpriteRenderer spriteObject = sprites[i]; // 设置Sprite
             spriteObject.transform.position = midpoint; // 设置位置为中点
-            Vector3 lastDirection = (points[0].position - points[5].position).normalized;
+            Vector3 lastDirection = (points[i].position - points[(i + 1) % 6].position).normalized;
             float lastAngle = Mathf.Atan2(lastDirection.y, lastDirection.x) * Mathf.Rad2Deg;
             spriteObject.transform.rotation = Quaternion.Euler(0, 0, lastAngle);
         }

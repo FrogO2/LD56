@@ -19,7 +19,7 @@ namespace test
         }
         private void Update()
         {
-            text.text = cell.GetCurrentSpan().ToString("0.0");
+            text.text = cell.GetCurrentSpan().ToString("0.0") + "\nid: " + cell.id;
         }
     }
 }

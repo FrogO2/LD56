@@ -3,6 +3,18 @@ using JetBrains.Annotations;
 
 namespace Cell
 {
+    public enum ComponentType
+    {
+        Devour,
+        Produce,
+        Exhaust,
+        None
+    }
+    public struct Component
+    {
+        public ComponentType type;
+        public int id;
+    }
     public class CellData
     {
         public float resource;
