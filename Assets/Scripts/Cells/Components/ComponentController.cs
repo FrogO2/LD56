@@ -18,7 +18,7 @@ namespace component
         private void Awake()
         {
             cell = GetComponent<MonoCell>();
-            Debug.Log(cell);
+            // Debug.Log(cell);
             ComponentList = new List<BaseComponent>{null, null, null, null, null, null};
             componentPairs = new Dictionary<System.Type, BaseComponent>(baseComponents.Length);
             dirtydata = new Stack<Transform>();

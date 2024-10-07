@@ -45,7 +45,9 @@ namespace test
                     for (int offset = 0; offset < 5; offset++)
                     {
                         CellView test_cell = new CellView();
-                        test_cell.CreateWithParentWithPos(cellData, initTransform, i + offset);
+                        TypeEventSystem.Global.Send(new OnRegisterMonoCellCreating { cellView = test_cell});
+                        TypeEventSystem.Global.Send<OnCreateCell>();
+                        // test_cell.CreateWithParentWithPos(cellData, initTransform, i + offset);
                         for (int j = 0; j < 6; j++)
                         {
                             test_cell.m_cell.SetComponent(j, (ComponentType)Random.Range(0, 4));

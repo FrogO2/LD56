@@ -182,8 +182,7 @@ namespace Cell
                             exhaustPipesOrganelles.Add(exhaustOrganelles);
                         }
                     }
-                    tempDevours.Add(entrance);
-                    //tempProducePipes.Add();
+
                 }
                 
                 

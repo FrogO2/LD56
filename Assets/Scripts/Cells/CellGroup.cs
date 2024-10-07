@@ -2,6 +2,7 @@
 
 using QFramework;
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,6 +32,15 @@ namespace Cell
             TypeEventSystem.Global.Register<OnCreateCell>(e =>
             {
                 GameObject obj = CellFactory.Create();
+                BFS bfs = new BFS();
+                var a = bfs.GetAll();
+                string name = "";
+                List<int> s = a.Item2[0];
+                foreach (var VARIABLE in s)
+                {
+                    name += VARIABLE + " ";
+                }
+                Debug.LogWarning(name);
             }).UnRegisterWhenGameObjectDestroyed(this);
             TypeEventSystem.Global.Register<OnRegisterMonoCellCreating>(e =>
             {
