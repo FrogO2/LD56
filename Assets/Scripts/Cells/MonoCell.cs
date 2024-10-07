@@ -22,8 +22,8 @@ namespace Cell
         public bool is_outer_u;
         public ComponentType down;
         public bool is_outer_d;
-        public List<ComponentType> allcomponents;
-        public List<bool> allouters;
+        public ComponentType[] allcomponents;
+        public bool[] allouters;
     }
     public class MonoCell : MonoBehaviour, BaseMonoCell
     {
@@ -64,12 +64,12 @@ namespace Cell
             }
         }
 
-        public virtual void Birth()
+        public void Birth()
         {
             Initialize();
         }
 
-        public virtual void Death()
+        public void Death()
         {
             Destroy(this.gameObject);
         }
@@ -87,12 +87,11 @@ namespace Cell
             _current_span = span;
             _current_resource = 0;
             m_components = new Components();
+            m_components.allcomponents = new ComponentType[6];
+            m_components.allouters = new bool[6];
             OuterUpdate();
             MsgInit();
-            m_components.allcomponents = new List<ComponentType> { ComponentType.None, ComponentType.None, ComponentType.None,
-                                                                    ComponentType.None, ComponentType.None, ComponentType.None};
-            m_components.allouters = new List<bool> { m_components.is_outer_u, m_components.is_outer_ru, m_components.is_outer_rd,
-                                                    m_components.is_outer_d, m_components.is_outer_ld, m_components.is_outer_lu};
+            
         }
 
         public ComponentType id2component(int id)
@@ -128,6 +127,34 @@ namespace Cell
             components_id[0] = (id + 1) % 6;
             components_id[1] = (id - 1) % 6;
             return components_id;
+        }
+        
+        public void SetComponent(int index, ComponentType type)
+        {
+            m_components.allcomponents[index] = type;
+            switch (id)
+            {
+                case 0:
+                    m_components.up = type;
+                    break;
+                case 1:
+                    m_components.right_up = type;
+                    break;
+                case 2:
+                    m_components.right_down = type;
+                    break;
+                case 3:
+                    m_components.down = type;
+                    break;
+                case 4:
+                    m_components.left_down = type;
+                    break;
+                case 5:
+                    m_components.left_up = type;
+                    break;
+                default:
+                    break;
+            }
         }
         public void MsgInit()
         {
@@ -232,9 +259,6 @@ namespace Cell
                     if (!MonoCellManager.Instance.CheckMap[id + (2 * MonoCellManager.ROWNUM)])
                         m_components.is_outer_d = true;
             }
-        }
-        public void OuterListUpdate()
-        {
             if (m_components.is_outer_u) m_components.allouters[0] = true;
             if (m_components.is_outer_ru) m_components.allouters[1] = true;
             if (m_components.is_outer_rd) m_components.allouters[2] = true;
@@ -250,7 +274,7 @@ namespace Cell
 
         private void Awake()
         {
-            Birth();
+            Initialize();
         }
 
         void Start()

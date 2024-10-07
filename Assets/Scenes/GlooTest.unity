@@ -518,7 +518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 196220869262029256, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureDistance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 196220869262029256, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureConnectedAnchor
@@ -530,7 +530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 364800934197300419, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureDistance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 364800934197300419, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureConnectedAnchor
@@ -540,12 +540,24 @@ PrefabInstance:
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 864547238086009925, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1459460782565644377, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1459460782565644377, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2681935796909535985, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681935796909535985, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
+      propertyPath: m_GravityScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2732908938187724236, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
@@ -566,7 +578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3086685139722460089, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureDistance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3086685139722460089, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureConnectedAnchor
@@ -574,7 +586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167522080370115380, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureDistance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3167522080370115380, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureConnectedAnchor
@@ -604,12 +616,24 @@ PrefabInstance:
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4066398130700408704, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4135891438145413509, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4135891438145413509, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4949635286250000874, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949635286250000874, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
+      propertyPath: m_GravityScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6104707991908502909, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
@@ -674,12 +698,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7759479434740857086, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureDistance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7759479434740857086, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureConnectedAnchor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8135141752441933977, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
+      propertyPath: m_ShapeTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 0616ebd2e00fec2488e5fc217455e4f8, type: 3}
     - target: {fileID: 8135141752441933977, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_LocalAABB.m_Center.x
       value: -0.023042917
@@ -702,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9167207874016228891, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureDistance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9167207874016228891, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_AutoConfigureConnectedAnchor
@@ -1140,6 +1168,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8135141752441933977, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
+      propertyPath: m_ShapeTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 0616ebd2e00fec2488e5fc217455e4f8, type: 3}
     - target: {fileID: 8458955302585390876, guid: c8701d35789aa3146a6c7af306d18539, type: 3}
       propertyPath: m_Name
       value: Cell
