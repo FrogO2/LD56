@@ -48,7 +48,7 @@ namespace test
                         test_cell.CreateWithParentWithPos(cellData, initTransform, i + offset);
                         for (int j = 0; j < 6; j++)
                         {
-                            test_cell.m_cell.SetComponent(j, (ComponentType)Random.Range(0, 5));
+                            test_cell.m_cell.SetComponent(j, (ComponentType)Random.Range(0, 4));
                         }
                         ComponentController controller = test_cell.m_cell.GetComponent<ComponentController>();
                         controller.RefreshComponents();

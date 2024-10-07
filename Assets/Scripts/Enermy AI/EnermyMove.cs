@@ -8,9 +8,11 @@ public class EnermyMove : MonoBehaviour
     private Vector2 offset;
     public GameObject player;
     private Vector2 movement;
+    public int k1;
     //public Move PlayerMove;
     public float timer = 0;
     public int cl=0;
+    public int move =0; 
     // Start is called before the first frame update
     void Start()
     {
@@ -21,19 +23,20 @@ public class EnermyMove : MonoBehaviour
     
     void Update()
     {
+ 
     timer += Time.deltaTime;
     int k = Random.Range(0,3);
         if (timer >= 2)
         {if(k==0){
-            Wonder();
+            Wonder(player);
             timer = 0;}
         else{
-            Wonder();
+            Wonder(player);
             timer = 0;
         }
     }
     }
-    void run(){
+    public void run(GameObject player){
     if(cl==0){
         cl=1;
     }
@@ -51,7 +54,7 @@ public class EnermyMove : MonoBehaviour
     rb.velocity = movement*10;
     }
     }
-    void Wonder(){
+    public void Wonder(GameObject player){
     if(cl==0){
         cl=1;
     }
@@ -70,5 +73,6 @@ public class EnermyMove : MonoBehaviour
     rb.velocity = movement*10;
     }
     }
+
 }
 

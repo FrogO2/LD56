@@ -1,5 +1,6 @@
 using Cell;
 using QFramework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace component
         public BaseComponent[] baseComponents;
         public List<BaseComponent> ComponentList;
         private Dictionary<System.Type, BaseComponent> componentPairs;
+        private Stack<Transform> dirtydata;
         public MonoCell cell;
         private void Awake()
         {
@@ -19,6 +21,7 @@ namespace component
             Debug.Log(cell);
             ComponentList = new List<BaseComponent>{null, null, null, null, null, null};
             componentPairs = new Dictionary<System.Type, BaseComponent>(baseComponents.Length);
+            dirtydata = new Stack<Transform>();
             InitDic();
 
             Transform t = transform.Find("Components");
@@ -35,26 +38,33 @@ namespace component
         public void RefreshComponents()
         {
             ComponentType[] list = cell.m_components.allcomponents;
+            string str = "";
             for (int i = 0; i < 6; i++)
             {
                 switch (list[i])
                 {
                     case ComponentType.Devour:
                         ComponentList[i] = componentPairs[typeof(DevourComponent)];
+                        str += "DE ";
                         break;
                     case ComponentType.Produce:
                         ComponentList[i] = componentPairs[typeof(ProduceComponent)];
+                        str += "PU ";
                         break;
                     case ComponentType.Exhaust:
                         ComponentList[i] = componentPairs[typeof(ExhaustComponent)];
+                        str += "EX ";
                         break;
                     case ComponentType.None:
                         ComponentList[i] = null;
+                        str += "None ";
                         break;
                     default:
+                        Debug.LogError("Unexpected Type: " + list[i]);
                         break;
                 }
             }
+            Debug.Log(str);
         }
 
         private void AttachComponentToObj(int index)
@@ -65,26 +75,47 @@ namespace component
             obj.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -60 * index));
         }
 
-        private void RemoveComponentFromObj(int index)
+        private void MarkComponentFromObj(int index)
         {
             if (posList[index].childCount == 0) return;
-            Transform component = posList[index].GetChild(0);
-            Debug.Log(component);
-            Destroy(component.gameObject);
+            for (int i = 0; i < posList[index].childCount; i++)
+            {
+                dirtydata.Push(posList[index].GetChild(i));
+            }
+        }
+
+        private void RemoveComponents()
+        {
+            while (!dirtydata.IsNullOrEmpty())
+            {
+                Destroy(dirtydata.Pop().gameObject);
+            }
         }
 
         public void ReplaceComponent(int index)
         {
-            RemoveComponentFromObj(index);
+            MarkComponentFromObj(index);
             AttachComponentToObj(index);
+            RemoveComponents();
         }
 
         public void UpdateAllComponents()
         {
             for (int i = 0; i < 6; i++)
             {
-                ReplaceComponent(i);
+                MarkComponentFromObj(i);
+                AttachComponentToObj(i);
             }
+            RemoveComponents();
+        }
+
+        public void DeleteAllComponents()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                MarkComponentFromObj(i);
+            }
+            RemoveComponents();
         }
 
         public void ContactComponent(string name, ComponentType type)
@@ -105,6 +136,7 @@ namespace component
                 case "lu":
                     index = 5; break;
                 default:
+                    Debug.LogError("Unexpected Name");
                     break;
             }
             cell.SetComponent(index, type);
@@ -119,22 +151,21 @@ namespace component
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                cell.SetComponent(0, ComponentType.Devour);
-                cell.SetComponent(1, ComponentType.Exhaust);
-                RefreshComponents();
-                UpdateAllComponents();
-            }
 
-            if (Input.GetKeyDown(KeyCode.O))
+        }
+
+        private void OnMouseDown()
+        {
+            ComponentType[] temp = new ComponentType[6];
+            for (int i = 0; i < 6; i++)
             {
-                cell.SetComponent(0, ComponentType.Produce);
-                cell.SetComponent(1, ComponentType.Devour);
-                cell.SetComponent(2, ComponentType.Exhaust);
-                RefreshComponents();
-                UpdateAllComponents();
+                if (i < 5) temp[i + 1] = cell.m_components.allcomponents[i];
+                else temp[0] = cell.m_components.allcomponents[i];
             }
+            for (int i = 0;i < 6;i++) cell.m_components.allcomponents[i] = temp[i];
+            RefreshComponents();
+            //DeleteAllComponents();
+            UpdateAllComponents();
         }
     }
 }
