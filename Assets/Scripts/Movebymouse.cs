@@ -1,6 +1,7 @@
 using Cell;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Movebymouse : MonoBehaviour
@@ -29,7 +30,7 @@ public class Movebymouse : MonoBehaviour
         dir.z = 0f;
         dir= dir.normalized;
         float angle = Vector3.Angle(dir,Vector3.up);
-        float count = MonoCellManager.Instance.MonoCellList.Count;
+        float count = math.max(MonoCellManager.Instance.MonoCellList.Count, 1);
         float x = (count + countplusa) / count;
         if (mouse.x > obj.x) angle = -angle;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), Time.deltaTime * smooth * x);
@@ -39,7 +40,7 @@ public class Movebymouse : MonoBehaviour
     {
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
-        float count = MonoCellManager.Instance.MonoCellList.Count;
+        float count = math.max(MonoCellManager.Instance.MonoCellList.Count, 1);
         float x = (count + countplusa) / count;
         Vector3 endPos = transform.position + transform.right * speed * moveX /x+ transform.up * speed * moveY / x;
         transform.position = Vector3.SmoothDamp(transform.position, endPos, ref velocity, Time.deltaTime * smooth);
