@@ -87,7 +87,8 @@ namespace Cell
             _current_span = span;
             _current_resource = 0;
             m_components = new Components();
-            m_components.allcomponents = new ComponentType[6];
+            m_components.allcomponents = new ComponentType[6] {ComponentType.None, ComponentType.None, ComponentType.None,
+                                                                ComponentType.None,ComponentType.None,ComponentType.None,};
             m_components.allouters = new bool[6];
             OuterUpdate();
             MsgInit();
@@ -306,16 +307,6 @@ namespace Cell
                 TypeEventSystem.Global.Send<OnCreateCell>();
                 _current_resource -= resource;
             }
-        }
-
-        private void OnMouseEnter()
-        {
-            Debug.Log("Mouse Enter");
-        }
-
-        private void OnMouseExit()
-        {
-            Debug.Log("Mouse Exit");
         }
     }
 }
