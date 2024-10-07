@@ -27,9 +27,9 @@ namespace test
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("send msg");
-                cellData.resource = 1000;
+                cellData.resource = 20;
                 cellData.efficiency = 10;
-                cellData.span = 60;
+                cellData.span = 5;
                 CellView test_cell = new CellView();
                 test_cell.CreateWithParent(cellData, initTransform);
             }
@@ -37,7 +37,7 @@ namespace test
             if (Input.GetKeyDown(KeyCode.V))
             {
                 Debug.Log("send msg");
-                cellData.resource = 1000;
+                cellData.resource = 10000;
                 cellData.efficiency = 10;
                 cellData.span = 1000;
                 for (int i = 3; i < 54; i+=9)
