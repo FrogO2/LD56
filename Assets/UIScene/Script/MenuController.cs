@@ -19,13 +19,16 @@ public class MenuController : MonoBehaviour
     public Button optionsButton;
     public Button creditsButton;
     public Button exitButton;
-    
+    public Button QuestionButton;
+
     [Header("First Selected Buttons")]
     public Button mainMenuFirstSelectedButton;
     public Button optionsFirstSelectedButton;
+    public Button QuestionFirstSelectedButton;
     
     [Header("Options")]
     public GameObject optionsPanel;
+    public GameObject QuestionPanel;
     
     [Header("Intro")]
     public GameObject introPanel;
@@ -33,7 +36,7 @@ public class MenuController : MonoBehaviour
     // TODO: Animation?
     public Animator introAnimator;
     
-    private enum Panels { Title, MainMenu, Options, Intro, SceneControl,TestScene};
+    private enum Panels { Title, MainMenu, Options, Intro, SceneControl,TestScene, Question};
 
     private Panels _State;
     
@@ -43,6 +46,7 @@ public class MenuController : MonoBehaviour
         SwitchToPanel(Panels.SceneControl);
         gameStartButton.onClick.AddListener(GameStart);
         optionsButton.onClick.AddListener(Options);
+        QuestionButton.onClick.AddListener(Question);
         // creditsButton.onClick.AddListener(Credits);
         exitButton.onClick.AddListener(Exit);
         eventSystem = EventSystem.current;
@@ -66,6 +70,7 @@ public class MenuController : MonoBehaviour
                 titlePanel.SetActive(true);
                 mainMenuPanel.SetActive(false);
                 optionsPanel.SetActive(false);
+                QuestionPanel.SetActive(false);
                 introPanel.SetActive(false);
                 break;
             case Panels.MainMenu:
@@ -73,6 +78,7 @@ public class MenuController : MonoBehaviour
                 titlePanel.SetActive(false);
                 mainMenuPanel.SetActive(true);
                 optionsPanel.SetActive(false);
+                QuestionPanel.SetActive(false);
                 introPanel.SetActive(false);
                 eventSystem.SetSelectedGameObject(mainMenuFirstSelectedButton.gameObject);
                 break;
@@ -81,14 +87,26 @@ public class MenuController : MonoBehaviour
                 titlePanel.SetActive(false);
                 mainMenuPanel.SetActive(false);
                 optionsPanel.SetActive(true);
+                QuestionPanel.SetActive(false);
                 introPanel.SetActive(false);
                 eventSystem.SetSelectedGameObject(optionsFirstSelectedButton.gameObject);
+                break;
+
+            case Panels.Question:
+                _State = Panels.Question;
+                titlePanel.SetActive(false);
+                mainMenuPanel.SetActive(false);
+                optionsPanel.SetActive(false);
+                QuestionPanel.SetActive(true);
+                introPanel.SetActive(false);
+                eventSystem.SetSelectedGameObject(QuestionFirstSelectedButton.gameObject);
                 break;
 
             case Panels.Intro:
                 _State = Panels.Intro;
                 titlePanel.SetActive(false);
                 mainMenuPanel.SetActive(false);
+                QuestionPanel.SetActive(false);
                 optionsPanel.SetActive(false);
                 introPanel.SetActive(true);
                 break;
@@ -106,6 +124,10 @@ public class MenuController : MonoBehaviour
         SwitchToPanel(Panels.Intro);
         // introAnimator.SetTrigger("PlayIntro");
         StartCoroutine(LoadGameSceneMain());
+    }
+    public void Question(){
+        Time.timeScale=0;
+        SwitchToPanel(Panels.Question);
     }
     public void MainMenu()
     {
@@ -152,7 +174,7 @@ public class MenuController : MonoBehaviour
     private IEnumerator LoadGameSceneMain()
     {
         Time.timeScale=1;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(0);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main Menu");
 
         // Wait until the asynchronous scene fully loads

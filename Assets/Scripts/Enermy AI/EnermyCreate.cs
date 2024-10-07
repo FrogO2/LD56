@@ -70,6 +70,6 @@ public class EnermyCreate : MonoBehaviour
         
     }
     public void de(){
-        i1=i1-1;
+        i1=i1-2;
     }
 }
