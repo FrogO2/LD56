@@ -48,12 +48,26 @@ namespace Cell
             CellListInit();
         }
 
-        public void DestroyMonoCell(int id)
+        public void ReadyToDestroyMonoCell(int id)
         {
             CellView destroyedCellView = _cells[id];
             MonoCell destroyedCell = _cells[id].m_cell;
+            destroyedCell.enabled = false;
             RemoveMonoCellFromListByIndex(id);
+        }
+
+        public void DestroyMonoCell(int id)
+        {
+            MonoCell destroyedCell = _cells[id].m_cell;
+            ReadyToDestroyMonoCell(id);
             destroyedCell.Death();
+        }
+        public void DestroyMonoCellDying(int id)
+        {
+            MonoCell destroyedCell = _cells[id].m_cell;
+            ReadyToDestroyMonoCell(id);
+            destroyedCell.StartDying();
+            ClearSmallerOne();
         }
 
         private bool CheckMapIsEmpty()
@@ -162,41 +176,47 @@ namespace Cell
 
         public int LeftUpCell(int id)
         {
-            if (id % (2 * ROWNUM) != 0 || id >= ROWNUM) 
+            if (id % (2 * ROWNUM) != 0 && id >= ROWNUM) 
             {
                 if ((id / ROWNUM) % 2 == 1 && CheckMap[id - ROWNUM]) return id - ROWNUM;
-                else if ((id / ROWNUM) % 2 == 0 && CheckMap[id - ROWNUM - 1]) return id - ROWNUM - 1;
+                
             }
+            else if (id % (2 * ROWNUM) != 0 && id >= ROWNUM + 1) 
+                if ((id / ROWNUM) % 2 == 0 && CheckMap[id - ROWNUM - 1]) return id - ROWNUM - 1;
             return -1;
         }
 
         public int RightUpCell(int id)
         {
-            if (id % (2 * ROWNUM) != 2 * ROWNUM - 1 || id >= ROWNUM)
+            if (id % (2 * ROWNUM) != 2 * ROWNUM - 1 && id >= ROWNUM)
             {
-                if ((id / ROWNUM) % 2 == 1 && CheckMap[id - ROWNUM + 1]) return id - ROWNUM + 1;
-                else if ((id / ROWNUM) % 2 == 0 && CheckMap[id - ROWNUM]) return id - ROWNUM;
+                if ((id / ROWNUM) % 2 == 1 && CheckMap[id - ROWNUM + 1]) return id - ROWNUM + 1;  
             }
+            else if (id % (2 * ROWNUM) != 2 * ROWNUM - 1 && id >= ROWNUM + 1)  
+                if ((id / ROWNUM) % 2 == 0 && CheckMap[id - ROWNUM]) return id - ROWNUM;
             return -1;
         }
 
         public int LeftDownCell(int id)
         {
-            if (id % (2 * ROWNUM) != 0 || id < MAXSIZE - ROWNUM)
+            if (id % (2 * ROWNUM) != 0 && id < MAXSIZE - ROWNUM + 1) 
+                if ((id / ROWNUM) % 2 == 0 && CheckMap[id + ROWNUM - 1]) return id + ROWNUM - 1;
+            else if (id % (2 * ROWNUM) != 0 && id < MAXSIZE - ROWNUM)
             {
                 if ((id / ROWNUM) % 2 == 1 && CheckMap[id + ROWNUM]) return id + ROWNUM;
-                else if ((id / ROWNUM) % 2 == 0 && CheckMap[id + ROWNUM - 1]) return id + ROWNUM - 1;
             }
+            
             return -1;
         }
 
         public int RightDownCell(int id)
         {
-            if (id % (2 * ROWNUM) != 2 * ROWNUM - 1 || id < MAXSIZE - ROWNUM)
+            if (id % (2 * ROWNUM) != 2 * ROWNUM - 1 && id < MAXSIZE - ROWNUM)
             {
-                if ((id / ROWNUM) % 2 == 1 && CheckMap[id + ROWNUM + 1]) return id - ROWNUM + 1;
-                else if ((id / ROWNUM) % 2 == 0 && CheckMap[id - ROWNUM]) return id - ROWNUM;
+                if ((id / ROWNUM) % 2 == 0 && CheckMap[id + ROWNUM]) return id + ROWNUM;
             }
+            else if (id % (2 * ROWNUM) != 2 * ROWNUM - 1 && id < MAXSIZE - ROWNUM - 1)  
+                if ((id / ROWNUM) % 2 == 1 && CheckMap[id + ROWNUM + 1]) return id + ROWNUM + 1;
             return -1;
         }
 
@@ -219,9 +239,100 @@ namespace Cell
         }
         
 
-        public void Detect(CellView cellView, ComponentType type)
+        public List<MonoCell> GetOuterCells()
         {
-            
+            List<MonoCell> res = new List<MonoCell>();
+            foreach (MonoCell cell in MonoCellList)
+            {
+                if(cell.isOuter) res.Add(cell);
+            }
+            return res;
+        }
+
+        public List<int> FindValidPart(int id)
+        {
+            List<int> res = new List<int>();
+            if(UpCell(id) > 0) if (CheckMap[UpCell(id)]) res.Add(UpCell(id));
+            if(DownCell(id) > 0) if (CheckMap[DownCell(id)])res.Add(DownCell(id));
+            if(LeftDownCell(id) > 0) if (CheckMap[LeftDownCell(id)]) res.Add(LeftDownCell(id));
+            if(RightDownCell(id) > 0) if (CheckMap[RightDownCell(id)]) res.Add(RightDownCell(id));
+            if(LeftUpCell(id) > 0) if (CheckMap[LeftUpCell(id)]) res.Add(LeftUpCell(id));
+            if(RightUpCell(id) > 0) if (CheckMap[RightUpCell(id)]) res.Add(RightUpCell(id));
+
+            return res;
+        }
+
+        public List<List<int>> FindDividedPart()
+        {
+            List<MonoCell> startPoints = GetOuterCells();
+            int[] iter = new int[MAXSIZE];
+            Stack<int> stack = new Stack<int>();
+            List<List<int>> res = new List<List<int>>();
+            System.Tuple<int[], Stack<int>, List<int>> temp;
+            foreach (MonoCell cell in startPoints)
+            {
+                List<int> part_res = new List<int>();
+                stack.Push(cell.id);
+                temp = FindRecursive(iter, stack, part_res);
+                res.Add(temp.Item3);
+            }
+            return res;
+        }
+
+        public void ClearSmallerOne()
+        {
+            List<List<int>> groups = FindDividedPart();
+            //Debug.LogWarning(groups.Count);
+            if (groups.Count == 1) return;
+            else if (groups.Count > 1)
+            {
+                int max_index = -1;
+                int max_group_size = 0;
+                for (int i = 0; i < groups.Count; i++)
+                {
+                    if (groups[i].Count > max_group_size)
+                    {
+                        max_group_size = groups[i].Count;
+                        max_index = i;
+                    }
+                }
+                for (int i = 0; i < groups.Count; i++)
+                {
+                    if (i == max_index) continue;
+                    foreach (int cell_id in groups[i])
+                    {
+                        MonoCell cell = _cells[cell_id].m_cell;
+                        ReadyToDestroyMonoCell(cell_id);
+                        cell.StartDyingWaitForSeconds(0.5f);
+                    }
+                }
+            }
+        }
+
+        private System.Tuple<int[], Stack<int>, List<int>> FindRecursive(int[] iter, Stack<int> next, List<int> res)
+        {
+            if (!next.IsNullOrEmpty())
+            {
+                int index = next.Pop();
+                if (iter[index] == 2) return FindRecursive(iter, next, res);
+                else
+                {
+                    iter[index] = 2;
+                    res.Add(index);
+                    List<int> candidate = FindValidPart(index);
+                    foreach (int part in candidate)
+                    {
+                        if (iter[part] >= 1) continue;
+                        else
+                        {
+                            iter[part] = 1;
+                            next.Push(part);
+                        }
+                    }
+                    return FindRecursive(iter, next, res);
+                }
+            }
+            else return new System.Tuple<int[], Stack<int>, List<int>>(iter, next, res);
         }
 
         public Vector3 ChoosePos(int id)

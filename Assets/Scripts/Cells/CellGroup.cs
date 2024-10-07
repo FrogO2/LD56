@@ -38,7 +38,7 @@ namespace Cell
             }).UnRegisterWhenGameObjectDestroyed(this);
             TypeEventSystem.Global.Register<OnDestroyCell>(e =>
             {
-                cellManager.DestroyMonoCell(e.monoCell.id);
+                cellManager.DestroyMonoCellDying(e.monoCell.id);
             }).UnRegisterWhenGameObjectDestroyed(this);
         }
 

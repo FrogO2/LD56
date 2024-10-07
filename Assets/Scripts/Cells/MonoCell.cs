@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.U2D;
 
 namespace Cell
 { 
@@ -32,6 +33,7 @@ namespace Cell
         private float _current_span;
         private float _current_resource;
         private CellView m_cellView;
+        //private SpriteRenderer m_spriteRenderer;
 
         public float resource;
         public float efficiency;
@@ -41,6 +43,9 @@ namespace Cell
         private bool isDevourActive = false;
         private bool isProduceActive = false;
         private bool isExhaustActive = false;
+
+        public bool isOuter => m_components.is_outer_d || m_components.is_outer_ru || m_components.is_outer_lu ||
+                                m_components.is_outer_u || m_components.is_outer_ld || m_components.is_outer_rd;
 
         
 
@@ -71,6 +76,7 @@ namespace Cell
 
         public void Death()
         {
+            //AudioKit.PlaySound("Cell Died");
             Destroy(this.gameObject);
         }
 
@@ -83,6 +89,7 @@ namespace Cell
 
         public void Initialize()
         {
+            //m_spriteRenderer = GetComponent<SpriteRenderer>();
             CellDataInit(this.resource, this.efficiency, this.span);
             _current_span = span;
             _current_resource = 0;
@@ -295,7 +302,9 @@ namespace Cell
                 enabled = false;
             }
 
-            if (_current_resource >= resource) 
+            _current_resource += 10*Time.deltaTime;
+
+            if (_current_resource >= resource && enabled) 
             {
                 CellData new_data = new CellData();
                 new_data.resource = resource;
@@ -307,6 +316,45 @@ namespace Cell
                 TypeEventSystem.Global.Send<OnCreateCell>();
                 _current_resource -= resource;
             }
+        }
+        private float parameter = 0f;
+        private IEnumerator Dying(float s)
+        {
+            yield return new WaitForSeconds(s);
+            Color color = new Color(255, 255, 255);
+            while (parameter < 1)
+            {
+                parameter += Time.deltaTime;
+                var tg = GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer t in tg)
+                {
+                    t.color = Color.Lerp(color, new Color(255, 255, 255, 0f), parameter);
+                }
+                GetComponentInChildren<SpriteShapeRenderer>().color = Color.Lerp(color, new Color(255, 255, 255, 0f), parameter);
+                yield return null;
+            }
+            Death();
+            yield return null;
+        }
+
+        public void StartDying()
+        {
+            var tg = GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D t in tg)
+            {
+                t.enabled = false;
+            }
+            StartCoroutine(Dying(0));
+        }
+
+        public void StartDyingWaitForSeconds(float s)
+        {
+            var tg = GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D t in tg)
+            {
+                t.enabled = false;
+            }
+            StartCoroutine(Dying(s));
         }
     }
 }
