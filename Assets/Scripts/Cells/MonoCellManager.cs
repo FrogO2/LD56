@@ -222,21 +222,25 @@ namespace Cell
 
         public int UpCell(int id)
         {
-            if ( id >= 2*ROWNUM)
+            // 检查是否越界，并确保目标单元格有效
+            if (id >= 2 * ROWNUM && CheckMap[id - (2 * ROWNUM)])
             {
-                return id - (2 * ROWNUM);
+                return id - (2 * ROWNUM); // 返回上方的有效 Cell ID
             }
-            return -1;
+            return -1; // 返回 -1 表示无效 ID
         }
+
 
         public int DownCell(int id)
         {
-            if (id < MAXSIZE - 2 * ROWNUM)
+            // 检查是否越界，并确保目标单元格有效
+            if (id < MAXSIZE - 2 * ROWNUM && CheckMap[id + (2 * ROWNUM)])
             {
-                return id + (2 * ROWNUM);
+                return id + (2 * ROWNUM); // 返回下方的有效 Cell ID
             }
-            return -1;
+            return -1; // 返回 -1 表示无效 ID
         }
+
         
 
         public List<MonoCell> GetOuterCells()

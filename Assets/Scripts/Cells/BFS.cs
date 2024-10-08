@@ -107,9 +107,9 @@ namespace Cell
                 connected.Add(NewOrganelle(ComponentType.Produce, (Direction)(((int)organelle.direction + 1) % 6), organelle.id));
             }
             
-            if (components[((int)organelle.direction - 1) % 6]==ComponentType.Produce)
+            if (components[((int)organelle.direction + 5) % 6]==ComponentType.Produce)
             {
-                connected.Add(NewOrganelle(ComponentType.Produce, (Direction)(((int)organelle.direction - 1) % 6), organelle.id));
+                connected.Add(NewOrganelle(ComponentType.Produce, (Direction)(((int)organelle.direction + 5) % 6), organelle.id));
             }
 
             return connected;
@@ -204,19 +204,23 @@ namespace Cell
                 cellManager.LeftUpCell(organelle.id)
             };
 
-            if (ComponentType.Exhaust == cellManager._cells[surroundingCells[(int)organelle.direction]].m_cell.m_components.allcomponents[((int)organelle.direction + 3) % 6])
+            if (surroundingCells[(int)organelle.direction] != -1)
             {
-                connected.Add(NewOrganelle(ComponentType.Exhaust, (Direction)(((int)organelle.direction + 3) % 6), surroundingCells[(int)organelle.direction]));
+                if (ComponentType.Exhaust == cellManager._cells[surroundingCells[(int)organelle.direction]].m_cell.m_components.allcomponents[((int)organelle.direction + 3) % 6])
+                {
+                    connected.Add(NewOrganelle(ComponentType.Exhaust, (Direction)(((int)organelle.direction + 3) % 6), surroundingCells[(int)organelle.direction]));
+                }
             }
+
             
             if (cellManager._cells[organelle.id].m_cell.m_components.allcomponents[((int)organelle.direction + 1) % 6]==ComponentType.Exhaust)
             {
                 connected.Add(NewOrganelle(ComponentType.Exhaust, (Direction)(((int)organelle.direction + 1) % 6), organelle.id));
             }
         
-            if (cellManager._cells[organelle.id].m_cell.m_components.allcomponents[((int)organelle.direction - 1) % 6]==ComponentType.Exhaust)
+            if (cellManager._cells[organelle.id].m_cell.m_components.allcomponents[((int)organelle.direction + 5) % 6]==ComponentType.Exhaust)
             {
-                connected.Add(NewOrganelle(ComponentType.Exhaust, (Direction)(((int)organelle.direction - 1) % 6), organelle.id));
+                connected.Add(NewOrganelle(ComponentType.Exhaust, (Direction)(((int)organelle.direction + 5) % 6), organelle.id));
             }
 
             return connected;
@@ -249,10 +253,13 @@ namespace Cell
 
             foreach (Organelle i in organelles)
             {
-                if (type == cellManager._cells[surroundingCells[(int)i.direction]].m_cell.m_components.allcomponents[((int)i.direction + 3) % 6])
+                if (surroundingCells[(int)i.direction] != -1)
                 {
-                    index[(int)i.direction] = surroundingCells[(int)i.direction];
+                    if (type == cellManager._cells[surroundingCells[(int)i.direction]].m_cell.m_components.allcomponents[((int)i.direction + 3) % 6])
+                    {
+                        index[(int)i.direction] = surroundingCells[(int)i.direction];
 
+                    }
                 }
             }
 
