@@ -16,14 +16,15 @@ public class EnermyDead : MonoBehaviour
     public List<int> t=new List<int>(100);
     private void OnTriggerEnter2D(Collider2D collision){
         switch (collision.tag){
-        case "Cell":
-        Destroy(gameObject);
-        enermyCreate.de();
-        break;
-        case "Ai":
-        Destroy(gameObject);
-        break;
-        default:break;
+            case "Cell":
+                Destroy(gameObject);
+                enermyCreate.de();
+                break;
+            case "Ai":
+                Destroy(gameObject);
+                break;
+            default:
+                break;
         }
     }
     void Awake(){
@@ -33,19 +34,19 @@ public class EnermyDead : MonoBehaviour
     void Start(){
         rb = GetComponent<Rigidbody2D>();
     }
-void Update()
+    void Update()
     {
-}
+
+    }
     public void run1(float force){
-    Vector2  sq= transform.position;
-    offset = sq - new Vector2(-1,-1);
-    offset =-offset;
-    movement= offset.normalized;
-    rb.velocity = movement*force*10; 
+        Vector2  sq= transform.position;
+        offset = sq - new Vector2(-1,-1);
+        offset =-offset;
+        movement= offset.normalized;
+        rb.velocity = movement*force*10; 
     }
     public void stop1(){
-    movement= new Vector2(0,0);
-    rb.velocity = movement*10;
+        movement= new Vector2(0,0);
+        rb.velocity = movement*10;
     }
-
 }

@@ -17,9 +17,10 @@ public class Playershan : MonoBehaviour
         Collider2D[] hitColliders = Physics2D.OverlapBoxAll(transform.position,size,angle,collisionMask);
         foreach (var hitCollider in hitColliders)
         {
-            if(hitCollider.gameObject.name=="Square(Clone)"){
-            Rigidbody2D rb=hitCollider.gameObject.GetComponent<Rigidbody2D>();
-            rb.velocity=force*(-hitCollider.gameObject.transform.position+new Vector3(transform.position[0],transform.position[1],0));
+            if(hitCollider.gameObject.name=="Square(Clone)")
+            {
+                Rigidbody2D rb=hitCollider.gameObject.GetComponent<Rigidbody2D>();
+                rb.velocity=force*(-hitCollider.gameObject.transform.position+new Vector3(transform.position[0],transform.position[1],0));
             }
 
         }

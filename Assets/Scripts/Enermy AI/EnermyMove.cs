@@ -23,56 +23,56 @@ public class EnermyMove : MonoBehaviour
     
     void Update()
     {
- 
-    timer += Time.deltaTime;
-    int k = Random.Range(0,3);
+        timer += Time.deltaTime;
+        int k = Random.Range(0,3);
         if (timer >= 2)
-        {if(k==0){
-            Wonder(player);
-            timer = 0;}
-        else{
-            Wonder(player);
-            timer = 0;
+        {
+            if(k==0)
+            {
+                Wonder(player);
+                timer = 0;
+            }
+            else
+            {
+                Wonder(player);
+                timer = 0;
+            }
         }
     }
-    }
+
     public void run(GameObject player){
-    if(cl==0){
-        cl=1;
-    }
-    else{
-        cl=0;
-    }
-    if(cl==0){
-    offset = transform.position - player.transform.position;
-    offset =-offset;
-    movement= offset.normalized;
-    rb.velocity = movement*10; 
-    }
-    if(cl==1){
-    movement= new Vector2(0,0);
-    rb.velocity = movement*10;
-    }
-    }
-    public void Wonder(GameObject player){
-    if(cl==0){
-        cl=1;
-    }
-    else{
-        cl=0;
-    }
-    if(cl==0){
-    int a1=Random.Range(-100,100);
-    int a2=Random.Range(-100,100);
-    movement= new Vector2(a1,a2);
-    movement= movement.normalized;
-    rb.velocity = movement*10; 
-    }
-    if(cl==1){
-    movement= new Vector2(0,0);
-    rb.velocity = movement*10;
-    }
+        if(cl==0) cl=1;
+        else cl=0;
+
+        if(cl==0)
+        {
+            offset = transform.position - player.transform.position;
+            offset =-offset;
+            movement= offset.normalized;
+            rb.velocity = movement*10; 
+        }
+        if(cl==1)
+        {
+            movement= new Vector2(0,0);
+            rb.velocity = movement*10;
+        }
     }
 
+    public void Wonder(GameObject player){
+        if(cl==0) cl=1;
+        else cl=0;
+
+        if(cl==0){
+            int a1=Random.Range(-100,100);
+            int a2=Random.Range(-100,100);
+            movement= new Vector2(a1,a2);
+            movement= movement.normalized;
+            rb.velocity = movement*10; 
+        }
+        if(cl==1){
+            movement= new Vector2(0,0);
+            rb.velocity = movement*10;
+        }
+    }
 }
 

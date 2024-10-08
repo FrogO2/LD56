@@ -24,17 +24,18 @@ public class PlayerEat : MonoBehaviour
 
 
     }
-private void OnTriggerEnter2D(Collider2D collision){
-switch (collision.tag){
-case "Square":
-Destroy(collision.gameObject);
-EnermyCreate.de();
-break;
-case "Ai":
-Destroy(collision.gameObject);
-EnermyCreate.de();
-break;
-default:break;
-}
-}
+    private void OnTriggerEnter2D(Collider2D collision){
+        switch (collision.tag){
+            case "Square":
+                Destroy(collision.gameObject);
+                EnermyCreate.de();
+                break;
+            case "Ai":
+                Destroy(collision.gameObject);
+                EnermyCreate.de();
+                break;
+            default:
+                break;
+        }
+    }
 }

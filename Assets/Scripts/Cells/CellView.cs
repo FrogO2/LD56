@@ -169,4 +169,5 @@ namespace Cell
     public struct OnCreateCell {  }
     public struct OnDestroyCell { public MonoCell monoCell; }
     public struct OnRegisterMonoCellCreating { public CellView cellView; }
+    public struct OnDevour { }
 }
